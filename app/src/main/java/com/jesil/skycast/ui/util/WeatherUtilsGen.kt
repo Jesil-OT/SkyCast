@@ -1,5 +1,7 @@
 package com.jesil.skycast.ui.util
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.jesil.skycast.R
 import com.jesil.skycast.ui.theme.CloudyBlue
@@ -43,7 +45,8 @@ fun String.generateIcon(): Int {
     }
 }
 
-fun String.generateBackgroundColor(): Color? {
+@Composable
+fun String.generateBackgroundColor(): Color {
     return when(this) {
         //day
         "01d" -> ClearSky
@@ -66,6 +69,6 @@ fun String.generateBackgroundColor(): Color? {
         "11n" -> StormBlueNight
         "13n" -> SnowyBlueNight
         "50n" -> FoggyBlueNight
-        else -> null
+        else -> MaterialTheme.colorScheme.background
     }
 }
