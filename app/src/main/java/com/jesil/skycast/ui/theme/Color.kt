@@ -11,7 +11,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 //day
-val ClearSky = Color(0xFF49CBFF)
+val ClearSky = Color(0xFFEDB224)
 val CloudyBlue = Color(0xFF46AFFF)
 val RainyBlue = Color(0xFF407CD7)
 val FoggyBlue = Color(0xFF2DB5D9)

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.jesil.skycast"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.jesil.skycast"
@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.bundles.koin)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.bundles.ktor)
     implementation(libs.lottie.compose)
 
