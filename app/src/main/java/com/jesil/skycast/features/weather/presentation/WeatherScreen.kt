@@ -209,7 +209,7 @@ private fun WeatherScreenPreview() {
                     temperature = 303.62.convertToCelsius(),
                     weatherType = "Clear sky",
                     weatherTypeDescription = "clear sky",
-                    weatherTypeIcon = "01d",
+                    weatherTypeIcon = "03d",
                     windSpeed = "11 km/h",
                     humidity = "94%",
                     rainChance = "0.13",
