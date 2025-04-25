@@ -29,13 +29,11 @@ fun LocationTopBar(
     temperatureUnit: String = "°C",
     modifier: Modifier = Modifier,
     onNavigationClick: () -> Unit,
-    backgroundColor: Color,
 ) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(backgroundColor)
     ) {
         val (navIcon, locationText, unitText) = createRefs()
         createHorizontalChain(navIcon, locationText, unitText, chainStyle = ChainStyle.SpreadInside)
@@ -92,7 +90,6 @@ private fun LocationTopBarPreview() {
         LocationTopBar(
             date = "Lagos, NG",
             onNavigationClick = {},
-            backgroundColor = ClearSky
         )
     }
 

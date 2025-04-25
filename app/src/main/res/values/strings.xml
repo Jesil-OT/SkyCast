@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">SkyCast</string>
     <string name="menu">Menu</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind</string>
+    <string name="pressure">Pressure</string>
+    <string name="min_temp">Minimum Temp</string>
 </resources>

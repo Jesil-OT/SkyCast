@@ -8,14 +8,27 @@ import com.jesil.skycast.ui.theme.CloudyBlue
 import com.jesil.skycast.ui.theme.FoggyBlue
 import com.jesil.skycast.ui.theme.RainyBlue
 import com.jesil.skycast.ui.theme.ClearSky
+import com.jesil.skycast.ui.theme.ClearSky2
 import com.jesil.skycast.ui.theme.ClearSkyNight
+import com.jesil.skycast.ui.theme.ClearSkyNight2
+import com.jesil.skycast.ui.theme.CloudyBlue2
 import com.jesil.skycast.ui.theme.CloudyBlueNight
+import com.jesil.skycast.ui.theme.CloudyBlueNight2
+import com.jesil.skycast.ui.theme.FoggyBlue2
 import com.jesil.skycast.ui.theme.FoggyBlueNight
+import com.jesil.skycast.ui.theme.FoggyBlueNight2
+import com.jesil.skycast.ui.theme.Gray
+import com.jesil.skycast.ui.theme.RainyBlue2
 import com.jesil.skycast.ui.theme.RainyBlueNight
+import com.jesil.skycast.ui.theme.RainyBlueNight2
 import com.jesil.skycast.ui.theme.SnowyBlue
+import com.jesil.skycast.ui.theme.SnowyBlue2
 import com.jesil.skycast.ui.theme.SnowyBlueNight
+import com.jesil.skycast.ui.theme.SnowyBlueNight2
 import com.jesil.skycast.ui.theme.StormBlue
+import com.jesil.skycast.ui.theme.StormBlue2
 import com.jesil.skycast.ui.theme.StormBlueNight
+import com.jesil.skycast.ui.theme.StormBlueNight2
 
 fun String.generateIcon(): Int {
     return when(this) {
@@ -46,29 +59,29 @@ fun String.generateIcon(): Int {
 }
 
 @Composable
-fun String.generateBackgroundColor(): Color {
+fun String.generateBackgroundColor(): List<Color> {
     return when(this) {
         //day
-        "01d" -> ClearSky
-        "02d" -> CloudyBlue
-        "03d" -> CloudyBlue
-        "04d" -> CloudyBlue
-        "09d" -> RainyBlue
-        "10d" -> RainyBlue
-        "11d" -> StormBlue
-        "13d" -> SnowyBlue
-        "50d" -> FoggyBlue
+        "01d" -> listOf(ClearSky2, ClearSky)
+        "02d" -> listOf(CloudyBlue2, CloudyBlue)
+        "03d" -> listOf(CloudyBlue2, CloudyBlue)
+        "04d" -> listOf(CloudyBlue2, CloudyBlue)
+        "09d" -> listOf(RainyBlue2, RainyBlue)
+        "10d" -> listOf(RainyBlue2, RainyBlue)
+        "11d" -> listOf(StormBlue2, StormBlue)
+        "13d" -> listOf(SnowyBlue2, SnowyBlue)
+        "50d" -> listOf(FoggyBlue2, FoggyBlue)
 
         //Night
-        "01n" -> ClearSkyNight
-        "02n" -> CloudyBlueNight
-        "03n" -> CloudyBlueNight
-        "04n" -> CloudyBlueNight
-        "09n" -> RainyBlueNight
-        "10n" -> RainyBlueNight
-        "11n" -> StormBlueNight
-        "13n" -> SnowyBlueNight
-        "50n" -> FoggyBlueNight
-        else -> MaterialTheme.colorScheme.background
+        "01n" -> listOf(ClearSkyNight, ClearSkyNight2)
+        "02n" -> listOf(CloudyBlueNight, CloudyBlueNight2)
+        "03n" -> listOf(CloudyBlueNight, CloudyBlueNight2)
+        "04n" -> listOf(CloudyBlueNight, CloudyBlueNight2)
+        "09n" -> listOf(RainyBlueNight, RainyBlueNight2)
+        "10n" -> listOf(RainyBlueNight, RainyBlueNight2)
+        "11n" -> listOf(StormBlueNight, StormBlueNight2)
+        "13n" -> listOf(SnowyBlueNight, SnowyBlueNight2)
+        "50n" -> listOf(FoggyBlueNight, FoggyBlueNight2)
+        else -> listOf(Gray, Color.White)
     }
 }
