@@ -1,4 +1,4 @@
-package com.jesil.skycast.features.weather.data
+package com.jesil.skycast.features.weather.models
 
 import kotlin.math.roundToInt
 

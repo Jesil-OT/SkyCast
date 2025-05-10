@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jesil.skycast.R
-import com.jesil.skycast.features.weather.data.WeatherDataUi
+import com.jesil.skycast.features.weather.models.WeatherDataUi
 import com.jesil.skycast.ui.theme.ClearSky
 import com.jesil.skycast.ui.theme.SkyCastTheme
 

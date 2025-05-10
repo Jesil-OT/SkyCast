@@ -2,7 +2,6 @@ package com.jesil.skycast.features.weather.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,10 +29,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.jesil.skycast.features.weather.data.HoursWeatherStateUi
-import com.jesil.skycast.features.weather.data.WeatherDataUi
-import com.jesil.skycast.features.weather.data.WeatherStateUi
-import com.jesil.skycast.features.weather.data.convertToCelsius
+import com.jesil.skycast.BuildConfig
+import com.jesil.skycast.features.weather.models.HoursWeatherStateUi
+import com.jesil.skycast.features.weather.models.WeatherDataUi
+import com.jesil.skycast.features.weather.models.WeatherStateUi
+import com.jesil.skycast.features.weather.models.convertToCelsius
 import com.jesil.skycast.features.weather.presentation.components.HoursWeatherItem
 import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
 import com.jesil.skycast.features.weather.presentation.components.WeatherInfo
@@ -47,7 +47,6 @@ fun WeatherScreen(
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = state.weatherData?.weatherTypeIcon?.generateBackgroundColor()
-
     Scaffold(
         topBar = {
             LocationTopBar(
@@ -209,7 +208,7 @@ private fun WeatherScreenPreview() {
                     temperature = 303.62.convertToCelsius(),
                     weatherType = "Clear sky",
                     weatherTypeDescription = "clear sky",
-                    weatherTypeIcon = "03d",
+                    weatherTypeIcon = "01n",
                     windSpeed = "11 km/h",
                     humidity = "94%",
                     rainChance = "0.13",
