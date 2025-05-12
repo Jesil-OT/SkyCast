@@ -26,10 +26,4 @@ data class WeatherDataUi(
     val hourlyWeather: List<HoursWeatherStateUi> = emptyList()
 )
 
-internal fun Double.convertToCelsius(): String {
-    return (this - TEMP_IN_CELSIUS).roundToInt() .toString() + TEMP_CELSIUS
-}
-
-private const val TEMP_CELSIUS = "°"
-private const val TEMP_IN_CELSIUS = 273.15
 

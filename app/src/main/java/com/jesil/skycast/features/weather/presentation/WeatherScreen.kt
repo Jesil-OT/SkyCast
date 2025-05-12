@@ -33,11 +33,11 @@ import com.jesil.skycast.BuildConfig
 import com.jesil.skycast.features.weather.models.HoursWeatherStateUi
 import com.jesil.skycast.features.weather.models.WeatherDataUi
 import com.jesil.skycast.features.weather.models.WeatherStateUi
-import com.jesil.skycast.features.weather.models.convertToCelsius
 import com.jesil.skycast.features.weather.presentation.components.HoursWeatherItem
 import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
 import com.jesil.skycast.features.weather.presentation.components.WeatherInfo
 import com.jesil.skycast.ui.theme.SkyCastTheme
+import com.jesil.skycast.ui.util.convertToCelsius
 import com.jesil.skycast.ui.util.generateBackgroundColor
 import com.jesil.skycast.ui.util.generateIcon
 
