@@ -23,17 +23,16 @@ fun WeatherRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather{
         sunset = Instant.ofEpochSecond(sys.sunset.toLong()),
         pressure = main.pressure,
         minTemperature = main.tempMin.convertToCelsius(),
-//        hourlyWeather = hourlyData.toCurrentHourlyWeather()
     )
 }
 
-fun List<HourlyRemoteDto>.toCurrentHourlyWeather(): List<HoursWeather>{
+fun List<WeatherRemoteDto>.toCurrentHourlyWeather(): List<HoursWeather>{
     return listOf(
         HoursWeather(
-            time = Instant.ofEpochSecond(this[0].hourlyData[0].date.toLong()),
-            temperature = this[0].hourlyData[0].main.temp.convertToCelsius(),
-            weatherTypeIcon = this[0].hourlyData[0].weather[0].icon,
-            minTemperature = this[0].hourlyData[0].main.tempMin.convertToCelsius()
+            time = Instant.ofEpochSecond(this[0].date.toLong()),
+            temperature = this[0].main.temp.convertToCelsius(),
+            weatherTypeIcon = this[0].weather[0].icon,
+            minTemperature = this[0].main.tempMin.convertToCelsius()
         )
     )
 }

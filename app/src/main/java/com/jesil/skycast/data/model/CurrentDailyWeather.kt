@@ -19,3 +19,4 @@ data class CurrentDailyWeather(
     val hourlyWeather: List<HoursWeather> = emptyList()
 )
 
+
