@@ -4,11 +4,9 @@ import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.SerializationException
 import kotlin.coroutines.coroutineContext
 
@@ -49,9 +47,9 @@ inline fun <T, E : Error> Re<T, E>.onError(action: (E) -> Unit): Re<T, E> {
 }
 
 sealed class Response<out T> {
-    data object Loading : Response<Nothing>()
+//    data object Loading : Response<Nothing>()
     data class Success<out T>(val data: T) : Response<T>()
-    data class Error(val message: String, val code: Int = 0) : Response<Nothing>()
+    data class Error(val errorMessage: String, val code: Int = 0) : Response<Nothing>()
 }
 
 
@@ -59,7 +57,7 @@ sealed class Response<out T> {
 inline fun <reified T> safeApiCall(
    crossinline execute: suspend () -> HttpResponse
 ): Flow<Response<T>> = flow {
-    emit(Response.Loading)
+//    emit(Response.Loading)
 
     try {
         val response = execute()

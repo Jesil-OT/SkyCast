@@ -1,7 +1,9 @@
 package com.jesil.skycast.data.source.remote.model
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class WeatherRemoteDto(
     val base: String,
     val clouds: Clouds,

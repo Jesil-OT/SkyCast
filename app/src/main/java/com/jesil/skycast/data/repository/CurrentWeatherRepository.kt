@@ -8,5 +8,5 @@ interface CurrentWeatherRepository {
     suspend fun fetchCurrentWeather(
         latitude: Double,
         longitude: Double
-    ): Flow<Response<CurrentDailyWeather>>
+    ): Flow<CurrentDailyWeather>
 }

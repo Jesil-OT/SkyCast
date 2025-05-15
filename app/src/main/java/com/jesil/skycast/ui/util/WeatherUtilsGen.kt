@@ -54,7 +54,7 @@ fun String.generateIcon(): Int {
         "13n" -> R.drawable.ic_snow
         "50n" -> R.drawable.ic_mist
 
-        else -> 0
+        else -> R.drawable.ic_launcher_background
     }
 }
 

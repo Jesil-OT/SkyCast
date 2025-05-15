@@ -3,7 +3,7 @@ package com.jesil.skycast.features.weather.models
 import kotlin.math.roundToInt
 
 data class WeatherStateUi(
-    val weatherData: WeatherDataUi? = null,
+    val weatherData: WeatherDataUi = WeatherDataUi(),
     val isLoading: Boolean = false,
     val error: String? = null
 )

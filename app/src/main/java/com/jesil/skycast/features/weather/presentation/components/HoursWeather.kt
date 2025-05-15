@@ -14,8 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.jesil.skycast.features.weather.models.convertToCelsius
 import com.jesil.skycast.ui.theme.SkyCastTheme
+import com.jesil.skycast.ui.util.Constants
+import com.jesil.skycast.ui.util.convertToCelsius
 import com.jesil.skycast.ui.util.generateIcon
 
 @Composable
@@ -89,8 +90,8 @@ private fun HoursWeatherItemPreview() {
         HoursWeatherItem(
             time = "Now",
             weatherType = "01n",
-            temperature = 292.46.convertToCelsius(),
-            minTemperature = 290.31.convertToCelsius(),
+            temperature = 292.46.convertToCelsius().toString() + Constants.TEMP_CELSIUS,
+            minTemperature = 290.31.convertToCelsius().toString() + Constants.TEMP_CELSIUS,
             modifier = Modifier.background(
                 Color.Gray
             )

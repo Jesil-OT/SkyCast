@@ -22,14 +22,20 @@ class WeatherRemoteDataSource(
     suspend fun fetchCurrentWeather(
         latitude: Double,
         longitude: Double
-    ): Flow<Response<WeatherRemoteDto>> =
-        safeApiCall {
+    ): Flow<WeatherRemoteDto> =
+        safeApiCall<WeatherRemoteDto> {
             httpClient.get(
                 urlString = BuildConfig.SERVER_URL + "weather"
             ) {
                 parameter("lat", latitude)
                 parameter("lon", longitude)
                 parameter("appid", BuildConfig.SERVER_API_KEY)
+            }
+        }.map {
+            when(it){
+                is Response.Error -> throw Exception(it.errorMessage)
+//                is Response.Loading -> throw Exception("Loading")
+                is Response.Success -> it.data
             }
         }
 
