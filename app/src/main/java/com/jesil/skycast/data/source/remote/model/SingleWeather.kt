@@ -4,19 +4,16 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WeatherRemoteDto(
-    val base: String,
+data class SingleWeather(
     val clouds: Clouds,
-    val cod: Int,
-    @SerialName("coord")
-    val coordinates: Coord,
     @SerialName("dt")
     val date: Int,
-    val id: Int,
+    @SerialName("dt_txt")
+    val dateInText: String,
     val main: Main,
-    val name: String,
+    val pop: Double,
+//    val rain: Rain,
     val sys: Sys,
-    val timezone: Int,
     val visibility: Int,
     val weather: List<Weather>,
     val wind: Wind

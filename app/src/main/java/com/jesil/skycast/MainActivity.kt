@@ -1,5 +1,6 @@
 package com.jesil.skycast
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,7 @@ import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.theme.SkyCastTheme
 import org.koin.androidx.compose.koinViewModel
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,6 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     WeatherScreen(
                         state = state,
-                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }

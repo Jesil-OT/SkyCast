@@ -1,27 +1,26 @@
 package com.jesil.skycast.features.weather.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jesil.skycast.data.mapper.toCurrentWeatherUI
 import com.jesil.skycast.data.repository.CurrentWeatherRepository
 import com.jesil.skycast.features.weather.models.WeatherStateUi
-import com.jesil.skycast.ui.util.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class WeatherViewModel(
     private val currentWeatherRepository: CurrentWeatherRepository
 ): ViewModel() {
+    private val TAG = "WeatherViewModel"
 
     init {
-        println("InIT")
+        Timber.tag(TAG).d("WeatherViewModel: init")
     }
     private val _weatherState = MutableStateFlow(WeatherStateUi())
     val weatherState =
@@ -38,10 +37,6 @@ class WeatherViewModel(
 
     private fun getCurrentWeather(latitude: Double, longitude: Double){
         viewModelScope.launch {
-//            _weatherState.update {
-//                it.copy(isLoading = true)
-//            }
-
             currentWeatherRepository.fetchCurrentWeather(
                 latitude = latitude,
                 longitude = longitude
@@ -63,8 +58,10 @@ class WeatherViewModel(
                         weatherData = data.toCurrentWeatherUI()
                     )
                 }
-                Log.d("WeatherViewModel", "getCurrentWeather: The current weather from data is $data ")
-                Log.d("WeatherViewModel", ("The current weather from UI is ${data.toCurrentWeatherUI()}"))
+                Timber.tag(TAG)
+                    .d("getCurrentWeather: The current weather from data is $data ")
+                Timber.tag(TAG)
+                    .d(("The current weather from UI is ${data.toCurrentWeatherUI()}"))
             }
         }
     }

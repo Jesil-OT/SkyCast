@@ -1,5 +1,8 @@
 package com.jesil.skycast.features.weather.presentation
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.animateValue
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +24,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -51,7 +58,11 @@ fun WeatherScreen(
     state: WeatherStateUi,
     modifier: Modifier = Modifier
 ) {
-    if (state.isLoading){
+    var colorState by remember { mutableStateOf(false) }
+    if (!state.isLoading) {
+        colorState = !colorState
+    }
+    if (state.isLoading) {
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
@@ -60,6 +71,10 @@ fun WeatherScreen(
             }
         )
     } else {
+        val transition = updateTransition(colorState, label = "background state")
+//        val backgroundColor = transition.animateValue(label = "background color"){
+//            if (it) state.weatherData.weatherTypeIcon.generateBackgroundColor() else listOf(Color.White, Color.Black)
+//        }
         val backgroundColor = state.weatherData.weatherTypeIcon.generateBackgroundColor()
         Scaffold(
             topBar = {
@@ -111,14 +126,13 @@ fun WeatherScreen(
                         end.linkTo(parent.end)
                     }
                 )
-//                state.weatherData.weatherTypeIcon.generateIcon()
                 Image(
                     painter = painterResource(state.weatherData.weatherTypeIcon.generateIcon()),
                     contentDescription = state.weatherData.weatherType,
                     modifier = Modifier
                         .size(250.dp)
                         .constrainAs(weatherType) {
-                            top.linkTo(location.bottom, margin = 10.dp)
+                            top.linkTo(location.bottom)
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         }
@@ -220,7 +234,7 @@ private fun WeatherScreenPreview() {
             state = WeatherStateUi(
                 weatherData = WeatherDataUi(
                     location = "Lagos, NG",
-                    temperature = 303.62.convertToCelsius().toString() + TEMP_CELSIUS,
+                    temperature = "31°",
                     weatherType = "Clear sky",
                     weatherTypeDescription = "clear sky",
                     weatherTypeIcon = "01n",
@@ -233,57 +247,11 @@ private fun WeatherScreenPreview() {
                     sunset = "7:00 pm",
                     pressure = "1009 hpa",
                     minTemperature = "29°C",
-                    hourlyWeather = dummyHourlyData
                 ),
                 isLoading = false,
-                error = null
+                error = null,
             )
         )
 
     }
 }
-
-internal val dummyHourlyData = listOf(
-    HoursWeatherStateUi(
-        time = "Now",
-        weatherTypeIcon = "01n",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-    HoursWeatherStateUi(
-        time = "3PM",
-        weatherTypeIcon = "02n",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-    HoursWeatherStateUi(
-        time = "6PM",
-        weatherTypeIcon = "01d",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-    HoursWeatherStateUi(
-        time = "9PM",
-        weatherTypeIcon = "04n",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-    HoursWeatherStateUi(
-        time = "12AM",
-        weatherTypeIcon = "01n",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-    HoursWeatherStateUi(
-        time = "3AM",
-        weatherTypeIcon = "11n",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-    HoursWeatherStateUi(
-        time = "6AM",
-        weatherTypeIcon = "02d",
-        temperature = 292.46.convertToCelsius().toString() + TEMP_CELSIUS,
-        minTemperature = 290.31.convertToCelsius().toString() + TEMP_CELSIUS
-    ),
-)

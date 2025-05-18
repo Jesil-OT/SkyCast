@@ -5,6 +5,7 @@ import java.time.Instant
 data class CurrentDailyWeather(
     val id: Int = 0,
     val location: String = "",
+    val country: String = "",
     val temperature: Int = 0,
     val weatherType: String = "",
     val weatherTypeDescription: String = "",
@@ -16,7 +17,8 @@ data class CurrentDailyWeather(
     val sunset: Instant = Instant.now(),
     val pressure: Int = 0,
     val minTemperature: Int = 0,
-    val hourlyWeather: List<HoursWeather> = emptyList()
+    val hourlyWeather: List<CurrentDailyWeather> = emptyList()
 )
+
 
 
