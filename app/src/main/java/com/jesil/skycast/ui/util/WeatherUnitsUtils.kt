@@ -20,6 +20,10 @@ fun Instant.formatUnixTime(zoneId: String = "UTC"): String =
     DateTimeFormatter.ofPattern("h:mm a")
         .withZone(ZoneId.of(zoneId)).format(this)
 
+fun Instant.formatUnixTimeSimple(zoneId: String = "UTC"): String =
+    DateTimeFormatter.ofPattern("h a")
+        .withZone(ZoneId.of(zoneId)).format(this)
+
 fun Instant.formatTimestamp(zoneId: String = "UTC"): String =
     DateTimeFormatter.ofPattern("EEEE, MMMM d", Locale.ENGLISH)
         .withZone(ZoneId.of(zoneId)).format(this)

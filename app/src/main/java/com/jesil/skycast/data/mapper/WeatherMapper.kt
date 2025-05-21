@@ -15,6 +15,7 @@ import com.jesil.skycast.ui.util.convertMsToKhm
 import com.jesil.skycast.ui.util.convertToCelsius
 import com.jesil.skycast.ui.util.formatTimestamp
 import com.jesil.skycast.ui.util.formatUnixTime
+import com.jesil.skycast.ui.util.formatUnixTimeSimple
 import java.time.Instant
 
 fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
@@ -33,7 +34,7 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
         sunset = Instant.ofEpochSecond(city.sunset.toLong()),
         pressure = currentWeatherList[0].main.pressure,
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
-        hourlyWeather = currentWeatherList.map { it.toHoursWeather() }
+        hourlyWeather = currentWeatherList.map { it.toHoursWeather() }.take(9)
     )
 }
 
@@ -52,7 +53,7 @@ fun SingleWeather.toHoursWeather(): CurrentDailyWeather {
         sunrise = Instant.now(),
         sunset = Instant.now(),
         pressure = main.pressure,
-        minTemperature = main.minimumTemperature.convertToCelsius(),
+        minTemperature = main.feelsLikeTemperature.convertToCelsius(),
         hourlyWeather = emptyList()
     )
 }
@@ -79,7 +80,7 @@ fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherDataUi {
 
 fun CurrentDailyWeather.toHoursWeatherUI(): HoursWeatherStateUi {
     return HoursWeatherStateUi(
-        time = timeZone.formatUnixTime(),
+        time = timeZone.formatUnixTimeSimple(),
         weatherTypeIcon = weatherTypeIcon,
         temperature = temperature.toString() + TEMP_CELSIUS,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS

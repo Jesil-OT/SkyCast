@@ -26,4 +26,12 @@ data class WeatherDataUi(
     val hourlyWeather: List<HoursWeatherStateUi> = emptyList()
 )
 
+sealed class WeatherViewState{
+    object Idle: WeatherViewState()
+    object Loading: WeatherViewState()
+    data class Success(val data: WeatherDataUi): WeatherViewState()
+    data class Error(val message: String): WeatherViewState()
+
+}
+
 

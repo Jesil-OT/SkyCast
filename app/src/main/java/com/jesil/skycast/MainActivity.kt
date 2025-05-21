@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SkyCastTheme {
                 val weatherViewModel: WeatherViewModel = koinViewModel()
-                val state by weatherViewModel.weatherState.collectAsStateWithLifecycle()
+                val state by weatherViewModel.weatherViewState.collectAsStateWithLifecycle()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     WeatherScreen(

@@ -40,8 +40,8 @@ fun HoursWeatherItem(
             fontSize = 15.sp,
             modifier = Modifier.constrainAs(timeText) {
                 top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                start.linkTo(parent.start, margin = 15.dp)
+                end.linkTo(parent.end, margin = 15.dp)
             }
         )
 
