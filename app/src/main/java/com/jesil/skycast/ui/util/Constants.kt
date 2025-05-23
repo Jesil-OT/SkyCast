@@ -5,7 +5,7 @@ object Constants {
     const val TEMP_C = "C"
     const val TEMP_IN_CELSIUS = 273.15
     const val MS_TO_KMH = 3.6
-    const val WIND_SPEED = "km/h"
+    const val WIND_SPEED = " km/h"
     const val PRESSURE = " hPa"
     const val HUMIDITY = "%"
 

@@ -47,7 +47,6 @@ inline fun <T, E : Error> Re<T, E>.onError(action: (E) -> Unit): Re<T, E> {
 }
 
 sealed class Response<out T> {
-//    data object Loading : Response<Nothing>()
     data class Success<out T>(val data: T) : Response<T>()
     data class Error(val errorMessage: String, val code: Int = 0) : Response<Nothing>()
 }
@@ -57,8 +56,6 @@ sealed class Response<out T> {
 inline fun <reified T> safeApiCall(
    crossinline execute: suspend () -> HttpResponse
 ): Flow<Response<T>> = flow {
-//    emit(Response.Loading)
-
     try {
         val response = execute()
         emit(responseToResult(response))

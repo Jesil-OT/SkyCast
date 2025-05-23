@@ -2,13 +2,11 @@ package com.jesil.skycast.data.mapper
 
 import com.jesil.skycast.data.model.CurrentDailyWeather
 import com.jesil.skycast.data.source.remote.model.SingleWeather
-import com.jesil.skycast.data.source.remote.model.Weather
 import com.jesil.skycast.data.source.remote.model.WeatherListRemoteDto
 import com.jesil.skycast.features.weather.models.HoursWeatherStateUi
-import com.jesil.skycast.features.weather.models.WeatherDataUi
+import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.ui.util.Constants.HUMIDITY
 import com.jesil.skycast.ui.util.Constants.PRESSURE
-import com.jesil.skycast.ui.util.Constants.TEMP_C
 import com.jesil.skycast.ui.util.Constants.TEMP_CELSIUS
 import com.jesil.skycast.ui.util.Constants.WIND_SPEED
 import com.jesil.skycast.ui.util.convertMsToKhm
@@ -58,8 +56,8 @@ fun SingleWeather.toHoursWeather(): CurrentDailyWeather {
     )
 }
 
-fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherDataUi {
-    return WeatherDataUi(
+fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherStateUi {
+    return WeatherStateUi(
         location = "$location, $country",
         time = timeZone.formatTimestamp(),
         temperature = temperature.toString() + TEMP_CELSIUS,
@@ -73,7 +71,7 @@ fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherDataUi {
         sunrise = sunrise.formatUnixTime(),
         sunset = sunset.formatUnixTime(),
         pressure = pressure.toString() + PRESSURE,
-        minTemperature = minTemperature.toString() + TEMP_CELSIUS + TEMP_C,
+        minTemperature = minTemperature.toString() + TEMP_CELSIUS,
         hourlyWeather = hourlyWeather.map { it.toHoursWeatherUI() }
     )
 }

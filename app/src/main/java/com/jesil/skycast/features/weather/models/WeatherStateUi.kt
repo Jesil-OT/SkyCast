@@ -1,14 +1,7 @@
 package com.jesil.skycast.features.weather.models
 
-import kotlin.math.roundToInt
 
 data class WeatherStateUi(
-    val weatherData: WeatherDataUi = WeatherDataUi(),
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
-
-data class WeatherDataUi(
     val location: String = "",
     val time: String = "",
     val temperature: String = "0.0°C",
@@ -29,7 +22,7 @@ data class WeatherDataUi(
 sealed class WeatherViewState{
     object Idle: WeatherViewState()
     object Loading: WeatherViewState()
-    data class Success(val data: WeatherDataUi): WeatherViewState()
+    data class Success(val data: WeatherStateUi): WeatherViewState()
     data class Error(val message: String): WeatherViewState()
 
 }

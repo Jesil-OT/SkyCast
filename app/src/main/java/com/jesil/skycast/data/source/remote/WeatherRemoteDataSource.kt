@@ -11,7 +11,9 @@ import com.jesil.skycast.ui.util.safeApiCall
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 class WeatherRemoteDataSource(
@@ -30,11 +32,12 @@ class WeatherRemoteDataSource(
                 parameter(LONGITUDE, longitude)
                 parameter(APP_ID, BuildConfig.SERVER_API_KEY)
             }
-        }.map { response ->
-            when(response){
-                is Response.Error -> throw Exception(response.errorMessage)
-                is Response.Success -> response.data
+        }.flowOn(Dispatchers.IO)
+            .map { response ->
+                when (response) {
+                    is Response.Error -> throw Exception(response.errorMessage)
+                    is Response.Success -> response.data
+                }
             }
-        }
 
 }

@@ -36,10 +36,10 @@ fun HoursWeatherItem(
             text = time,
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = Color.White.copy(alpha = .8f),
             fontSize = 15.sp,
             modifier = Modifier.constrainAs(timeText) {
-                top.linkTo(parent.top)
+                top.linkTo(parent.top, margin = 10.dp)
                 start.linkTo(parent.start, margin = 15.dp)
                 end.linkTo(parent.end, margin = 15.dp)
             }
@@ -78,6 +78,7 @@ fun HoursWeatherItem(
                 top.linkTo(temperatureText.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom, margin = 10.dp)
             }
         )
     }

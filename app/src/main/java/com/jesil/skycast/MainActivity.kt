@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     WeatherScreen(
                         state = state,
+                        onActions = weatherViewModel::onAction,
                     )
                 }
             }

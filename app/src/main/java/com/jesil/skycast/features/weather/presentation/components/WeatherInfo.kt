@@ -11,14 +11,15 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jesil.skycast.R
-import com.jesil.skycast.features.weather.models.WeatherDataUi
+import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.ui.theme.ClearSky
 import com.jesil.skycast.ui.theme.SkyCastTheme
+import com.jesil.skycast.ui.util.Constants.TEMP_C
 
 @Composable
 fun WeatherInfo(
     modifier: Modifier = Modifier,
-    data: WeatherDataUi,
+    data: WeatherStateUi,
 ) {
     ConstraintLayout(
         modifier = modifier.fillMaxWidth()
@@ -61,7 +62,6 @@ fun WeatherInfo(
             iconRes = painterResource(R.drawable.ic_wind),
             modifier = Modifier.constrainAs(windSpeedItem) {
                 top.linkTo(sunriseItem.bottom, margin = 10.dp)
-//                end.linkTo(sunriseItem.end)
             }
         )
 
@@ -77,7 +77,7 @@ fun WeatherInfo(
 
         WeatherInfoItem(
             title = stringResource(R.string.min_temp),
-            value = data.minTemperature,
+            value = data.minTemperature + TEMP_C,
             iconRes = painterResource(R.drawable.ic_precipitation),
             modifier = Modifier.constrainAs(minTempItem) {
                 top.linkTo(humidityItem.bottom, margin = 10.dp)
@@ -92,7 +92,7 @@ private fun WeatherInfoPreview() {
     SkyCastTheme {
         WeatherInfo(
             modifier = Modifier.background(ClearSky),
-            data = WeatherDataUi(
+            data = WeatherStateUi(
                 sunrise = "3:55 am",
                 sunset = "7:00 pm",
                 humidity = "80%",
