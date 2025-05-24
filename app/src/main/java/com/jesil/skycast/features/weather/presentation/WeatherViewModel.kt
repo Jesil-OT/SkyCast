@@ -28,8 +28,8 @@ class WeatherViewModel(
         .onStart {
             // Todo(get users current location)
             getCurrentWeatherFromCurrentLocation(
-                latitude = 28.770067,
-                longitude = 41.044922
+                latitude = -30.621959,
+                longitude = 124.624402
             )
         }
         .stateIn(

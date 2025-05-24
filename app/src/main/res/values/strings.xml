@@ -9,4 +9,9 @@
     <string name="min_temp">Temp</string>
     <string name="try_again">Try again</string>
     <string name="feels_like">Feels like %1$s</string>
+    <string name="location_permission_image">Location permission image</string>
+    <string name="location_permission_text">Location</string>
+    <string name="location_permission_description">Please allow SkyCast to access your location so it could provide you with the best weather forecast</string>
+    <string name="allow">Allow</string>
+    <string name="next">Next</string>
 </resources>
