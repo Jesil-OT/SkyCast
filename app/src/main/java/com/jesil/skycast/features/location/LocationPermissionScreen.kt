@@ -28,12 +28,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
+import com.jesil.skycast.Screens
+import com.jesil.skycast.features.location.components.LocationButton
 import com.jesil.skycast.ui.theme.SkyCastTheme
 
 @Composable
 fun LocationPermissionScreen(
     isPermissionGranted: Boolean,
+    navController: NavController,
     onAction: (LocationAction) -> Unit
 ) {
     Column(
@@ -70,21 +75,19 @@ fun LocationPermissionScreen(
 
         Spacer(modifier = Modifier.height(50.dp))
         if (!isPermissionGranted) {
-            Button(
+            LocationButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp),
-                onClick = { onAction(LocationAction.RequestPermission) }
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
+                onClick = { onAction(LocationAction.RequestPermission) },
+                icon = {
                     Icon(
                         imageVector = Icons.Rounded.CheckCircle,
                         contentDescription = stringResource(R.string.allow),
                         tint = MaterialTheme.colorScheme.onBackground
                     )
+                },
+                text = {
                     Text(
                         text = stringResource(R.string.allow),
                         style = MaterialTheme.typography.labelLarge.copy(
@@ -93,32 +96,35 @@ fun LocationPermissionScreen(
                         )
                     )
                 }
-            }
-        }else {
-            Button(
+            )
+        } else {
+            LocationButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp),
-                onClick = { onAction(LocationAction.NavigateToWeather) }
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.next ),
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
-                            fontSize = 15.sp
-                        )
-                    )
+                onClick = {
+                    navController.run {
+                        popBackStack()
+                        navigate(Screens.WeatherScreen.route)
+                    }
+                },
+                icon = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
                         contentDescription = stringResource(R.string.next),
                         tint = MaterialTheme.colorScheme.onBackground
                     )
+                },
+                text = {
+                    Text(
+                        text = stringResource(R.string.next),
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontSize = 15.sp
+                        )
+                    )
                 }
-            }
+            )
         }
     }
 }
@@ -127,6 +133,9 @@ fun LocationPermissionScreen(
 @Composable
 private fun LocationPermissionScreenPreview() {
     SkyCastTheme {
-        LocationPermissionScreen(isPermissionGranted = false) { }
+        LocationPermissionScreen(
+            isPermissionGranted = false,
+            navController = rememberNavController()
+        ) { }
     }
 }

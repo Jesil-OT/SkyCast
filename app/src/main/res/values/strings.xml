@@ -14,4 +14,5 @@
     <string name="location_permission_description">Please allow SkyCast to access your location so it could provide you with the best weather forecast</string>
     <string name="allow">Allow</string>
     <string name="next">Next</string>
+    <string name="days_forecast">%1$s-DAYS FORECAST</string>
 </resources>

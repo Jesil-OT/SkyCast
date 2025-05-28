@@ -37,7 +37,7 @@ fun HoursWeatherItem(
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
             color = Color.White.copy(alpha = .8f),
-            fontSize = 15.sp,
+            fontSize = 13.sp,
             modifier = Modifier.constrainAs(timeText) {
                 top.linkTo(parent.top, margin = 10.dp)
                 start.linkTo(parent.start, margin = 15.dp)
@@ -49,7 +49,7 @@ fun HoursWeatherItem(
             painter = painterResource(weatherType.generateIcon()),
             contentDescription = weatherType,
             modifier = Modifier
-                .size(40.dp)
+                .size(35.dp)
                 .constrainAs(weatherTypeIcon) {
                 top.linkTo(timeText.bottom, margin = 10.dp)
                 start.linkTo(parent.start)
@@ -61,7 +61,7 @@ fun HoursWeatherItem(
             text = temperature,
             style = MaterialTheme.typography.displayMedium,
             color = Color.White,
-            fontSize = 20.sp,
+            fontSize = 15.sp,
             modifier = Modifier.constrainAs(temperatureText) {
                 top.linkTo(weatherTypeIcon.bottom, margin = 10.dp)
                 start.linkTo(parent.start)
@@ -73,7 +73,7 @@ fun HoursWeatherItem(
             text = minTemperature,
             style = MaterialTheme.typography.displayMedium,
             color = Color.White.copy(alpha = 0.5f),
-            fontSize = 15.sp,
+            fontSize = 10.sp,
             modifier = Modifier.constrainAs(minTemperatureText) {
                 top.linkTo(temperatureText.bottom)
                 start.linkTo(parent.start)

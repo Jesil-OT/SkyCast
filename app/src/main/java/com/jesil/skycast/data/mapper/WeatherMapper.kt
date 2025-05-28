@@ -3,6 +3,7 @@ package com.jesil.skycast.data.mapper
 import com.jesil.skycast.data.model.CurrentDailyWeather
 import com.jesil.skycast.data.source.remote.model.SingleWeather
 import com.jesil.skycast.data.source.remote.model.WeatherListRemoteDto
+import com.jesil.skycast.features.weather.models.DailyWeatherStateUi
 import com.jesil.skycast.features.weather.models.HoursWeatherStateUi
 import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.ui.util.Constants.HUMIDITY
@@ -12,6 +13,7 @@ import com.jesil.skycast.ui.util.Constants.WIND_SPEED
 import com.jesil.skycast.ui.util.convertMsToKhm
 import com.jesil.skycast.ui.util.convertToCelsius
 import com.jesil.skycast.ui.util.formatTimestamp
+import com.jesil.skycast.ui.util.formatUnixDay
 import com.jesil.skycast.ui.util.formatUnixTime
 import com.jesil.skycast.ui.util.formatUnixTimeSimple
 import java.time.Instant
@@ -32,8 +34,17 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
         sunset = Instant.ofEpochSecond(city.sunset.toLong()),
         pressure = currentWeatherList[0].main.pressure,
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
-        hourlyWeather = currentWeatherList.map { it.toHoursWeather() }.take(9)
+        hourlyWeather = currentWeatherList.map { it.toHoursWeather() }.take(9),
+        dailyWeather = currentWeatherList.filterDailyEntries().map { it.toHoursWeather() }
     )
+}
+
+private fun List<SingleWeather>.filterDailyEntries(): List<SingleWeather> {
+    val daysSeen = mutableSetOf<String>()
+    return this.filter { forecast ->
+        val dayKey = forecast.dateInText.substring(0, 10) // Extract "YYYY-MM-DD" eg 2023-06-28
+        daysSeen.add(dayKey) // Returns true if day wasn't in set
+    }
 }
 
 fun SingleWeather.toHoursWeather(): CurrentDailyWeather {
@@ -72,13 +83,23 @@ fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherStateUi {
         sunset = sunset.formatUnixTime(),
         pressure = pressure.toString() + PRESSURE,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS,
-        hourlyWeather = hourlyWeather.map { it.toHoursWeatherUI() }
+        hourlyWeather = hourlyWeather.map { it.toHoursWeatherUI() },
+        dailyWeather = dailyWeather.map { it.toDailyWeatherUI() }
     )
 }
 
 fun CurrentDailyWeather.toHoursWeatherUI(): HoursWeatherStateUi {
     return HoursWeatherStateUi(
         time = timeZone.formatUnixTimeSimple(),
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature.toString() + TEMP_CELSIUS,
+        minTemperature = minTemperature.toString() + TEMP_CELSIUS
+    )
+}
+
+fun CurrentDailyWeather.toDailyWeatherUI(): DailyWeatherStateUi {
+    return DailyWeatherStateUi(
+        day = timeZone.formatUnixDay(),
         weatherTypeIcon = weatherTypeIcon,
         temperature = temperature.toString() + TEMP_CELSIUS,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS

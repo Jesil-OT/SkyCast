@@ -1,4 +1,4 @@
-package com.jesil.skycast.features.weather.presentation.components
+package com.jesil.skycast.features.weather.presentation.events
 
 
 sealed interface WeatherAction {

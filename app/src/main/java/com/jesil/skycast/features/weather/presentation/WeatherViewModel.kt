@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jesil.skycast.data.mapper.toCurrentWeatherUI
 import com.jesil.skycast.data.repository.CurrentWeatherRepository
 import com.jesil.skycast.features.weather.models.WeatherViewState
-import com.jesil.skycast.features.weather.presentation.components.WeatherAction
+import com.jesil.skycast.features.weather.presentation.events.WeatherAction
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
@@ -28,9 +28,12 @@ class WeatherViewModel(
         .onStart {
             // Todo(get users current location)
             getCurrentWeatherFromCurrentLocation(
-                latitude = -30.621959,
-                longitude = 124.624402
+                latitude = 4.740843,
+                longitude = 7.036059
             )
+//            latitude = -30.621959,
+//            longitude = 124.624402
+
         }
         .stateIn(
             scope = viewModelScope,

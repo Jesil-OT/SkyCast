@@ -16,7 +16,8 @@ data class WeatherStateUi(
     val sunset: String = "",
     val pressure: String = "",
     val minTemperature: String = "",
-    val hourlyWeather: List<HoursWeatherStateUi> = emptyList()
+    val hourlyWeather: List<HoursWeatherStateUi> = emptyList(),
+    val dailyWeather: List<DailyWeatherStateUi> = emptyList()
 )
 
 sealed class WeatherViewState{
@@ -24,7 +25,6 @@ sealed class WeatherViewState{
     object Loading: WeatherViewState()
     data class Success(val data: WeatherStateUi): WeatherViewState()
     data class Error(val message: String): WeatherViewState()
-
 }
 
 
