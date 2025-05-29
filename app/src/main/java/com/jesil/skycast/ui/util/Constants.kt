@@ -8,6 +8,7 @@ object Constants {
     const val WIND_SPEED = " km/h"
     const val PRESSURE = " hPa"
     const val HUMIDITY = "%"
+    const val VISIBILITY_SPEED = " km"
 
     const val WEATHER_END_POINT = "/data/2.5/weather"
     const val WEATHER_LIST_END_POINT = "/data/2.5/forecast"

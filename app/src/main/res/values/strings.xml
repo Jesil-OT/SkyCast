@@ -6,7 +6,7 @@
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind</string>
     <string name="pressure">Pressure</string>
-    <string name="min_temp">Temp</string>
+    <string name="min_temp">Minimum Temperature</string>
     <string name="try_again">Try again</string>
     <string name="feels_like">Feels like %1$s</string>
     <string name="location_permission_image">Location permission image</string>
@@ -15,4 +15,6 @@
     <string name="allow">Allow</string>
     <string name="next">Next</string>
     <string name="days_forecast">%1$s-DAYS FORECAST</string>
+    <string name="hourly_forecast">3-HOURLY FORECAST</string>
+    <string name="visibility">Visibility</string>
 </resources>

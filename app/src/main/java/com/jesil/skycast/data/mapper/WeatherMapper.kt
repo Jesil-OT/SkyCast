@@ -9,6 +9,7 @@ import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.ui.util.Constants.HUMIDITY
 import com.jesil.skycast.ui.util.Constants.PRESSURE
 import com.jesil.skycast.ui.util.Constants.TEMP_CELSIUS
+import com.jesil.skycast.ui.util.Constants.VISIBILITY_SPEED
 import com.jesil.skycast.ui.util.Constants.WIND_SPEED
 import com.jesil.skycast.ui.util.convertMsToKhm
 import com.jesil.skycast.ui.util.convertToCelsius
@@ -33,7 +34,9 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
         sunrise = Instant.ofEpochSecond(city.sunrise.toLong()),
         sunset = Instant.ofEpochSecond(city.sunset.toLong()),
         pressure = currentWeatherList[0].main.pressure,
+        seaLevel = currentWeatherList[0].main.seaLevel,
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
+        visibility = currentWeatherList[0].visibility,
         hourlyWeather = currentWeatherList.map { it.toHoursWeather() }.take(9),
         dailyWeather = currentWeatherList.filterDailyEntries().map { it.toHoursWeather() }
     )
@@ -82,7 +85,9 @@ fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherStateUi {
         sunrise = sunrise.formatUnixTime(),
         sunset = sunset.formatUnixTime(),
         pressure = pressure.toString() + PRESSURE,
+        seaLevel = seaLevel.toString() + PRESSURE,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS,
+        visibility = visibility.toString() + VISIBILITY_SPEED,
         hourlyWeather = hourlyWeather.map { it.toHoursWeatherUI() },
         dailyWeather = dailyWeather.map { it.toDailyWeatherUI() }
     )
@@ -98,6 +103,7 @@ fun CurrentDailyWeather.toHoursWeatherUI(): HoursWeatherStateUi {
 }
 
 fun CurrentDailyWeather.toDailyWeatherUI(): DailyWeatherStateUi {
+//    val currentTime = if (timeZone == Instant.now()) "Today" else timeZone.formatUnixDay()
     return DailyWeatherStateUi(
         day = timeZone.formatUnixDay(),
         weatherTypeIcon = weatherTypeIcon,

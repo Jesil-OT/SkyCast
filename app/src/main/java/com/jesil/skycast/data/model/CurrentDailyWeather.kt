@@ -16,6 +16,8 @@ data class CurrentDailyWeather(
     val sunrise: Instant = Instant.now(),
     val sunset: Instant = Instant.now(),
     val pressure: Int = 0,
+    val visibility: Int = 0,
+    val seaLevel : Int = 0,
     val minTemperature: Int = 0,
     val hourlyWeather: List<CurrentDailyWeather> = emptyList(),
     val dailyWeather: List<CurrentDailyWeather> = emptyList()

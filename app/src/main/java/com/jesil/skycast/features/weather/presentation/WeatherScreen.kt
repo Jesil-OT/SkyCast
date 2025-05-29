@@ -3,6 +3,8 @@ package com.jesil.skycast.features.weather.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -25,11 +27,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,10 +45,11 @@ import com.jesil.skycast.features.weather.models.WeatherViewState
 import com.jesil.skycast.features.weather.presentation.components.DailyWeatherItem
 import com.jesil.skycast.features.weather.presentation.components.ErrorScreen
 import com.jesil.skycast.features.weather.presentation.components.HoursWeatherItem
+import com.jesil.skycast.features.weather.presentation.components.LazyListHeader
 import com.jesil.skycast.features.weather.presentation.components.LoadingScreen
 import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
+import com.jesil.skycast.features.weather.presentation.components.WeatherInfos
 import com.jesil.skycast.features.weather.presentation.events.WeatherAction
-import com.jesil.skycast.features.weather.presentation.components.WeatherInfo
 import com.jesil.skycast.ui.theme.SkyCastTheme
 import com.jesil.skycast.ui.util.generateBackgroundColor
 import com.jesil.skycast.ui.util.generateIcon
@@ -134,7 +138,7 @@ fun WeatherInnerScreen(
                 painter = painterResource(state.weatherTypeIcon.generateIcon()),
                 contentDescription = state.weatherType,
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(180.dp)
                     .constrainAs(weatherType) {
                         top.linkTo(location.bottom)
                         start.linkTo(parent.start)
@@ -199,18 +203,38 @@ fun WeatherInnerScreen(
                 color = MaterialTheme.colorScheme.background.copy(.2f),
                 tonalElevation = 100.dp
             ) {
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    items(state.hourlyWeather) { hourlyWeather ->
-                        HoursWeatherItem(
-                            time = hourlyWeather.time,
-                            weatherType = hourlyWeather.weatherTypeIcon,
-                            temperature = hourlyWeather.temperature,
-                            minTemperature = hourlyWeather.minTemperature,
-                        )
+                Column {
+                    LazyListHeader(
+                        modifier = Modifier.fillMaxWidth(),
+                        iconRes = ImageVector.vectorResource(R.drawable.outline_access_time),
+                        headerTitle = {
+                            Text(
+                                text = stringResource(R.string.hourly_forecast),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = Color.White.copy(.5f),
+                                    fontSize = 13.sp,
+                                )
+                            )
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.height(5.dp))
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        items(state.hourlyWeather) { hourlyWeather ->
+                            HoursWeatherItem(
+                                time = hourlyWeather.time,
+                                weatherType = hourlyWeather.weatherTypeIcon,
+                                temperature = hourlyWeather.temperature,
+                                minTemperature = hourlyWeather.minTemperature,
+                            )
+
+
+                        }
                     }
                 }
             }
@@ -219,7 +243,7 @@ fun WeatherInnerScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .constrainAs(dailyWeather) {
-                        top.linkTo(hourlyWeather.bottom, margin = 20.dp)
+                        top.linkTo(hourlyWeather.bottom, margin = 10.dp)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                     },
@@ -234,24 +258,20 @@ fun WeatherInnerScreen(
                 ) {
 
                     item {
-                        Text(
-                            modifier = Modifier.padding(
-                                top = 10.dp,
-                                start = 20.dp,
-                                end = 20.dp
-                            ),
-                            text = stringResource(R.string.days_forecast, daysCount),
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = Color.White,
-                                fontSize = 15.sp,
-                            )
+                        LazyListHeader(
+                            modifier = Modifier.fillMaxWidth(),
+                            iconRes = Icons.Outlined.DateRange,
+                            headerTitle = {
+                                Text(
+                                    text = stringResource(R.string.days_forecast, daysCount),
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        color = Color.White.copy(.5f),
+                                        fontSize = 13.sp,
+                                    )
+                                )
+                            }
                         )
 
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 20.dp),
-                            thickness = 1.dp,
-                            color = Color.White.copy(.2f)
-                        )
                     }
 
                     items(state.dailyWeather) { dailyWeather ->
@@ -268,12 +288,12 @@ fun WeatherInnerScreen(
                 }
             }
 
-            WeatherInfo(
+            WeatherInfos(
                 data = state,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .constrainAs(weatherInfo) {
-                        top.linkTo(dailyWeather.bottom, margin = 30.dp)
+                        top.linkTo(dailyWeather.bottom, margin = 10.dp)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom, margin = 30.dp)
