@@ -193,7 +193,7 @@ fun WeatherInnerScreen(
 
             Surface(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 10.dp)
                     .constrainAs(hourlyWeather) {
                         top.linkTo(feelLike.bottom, margin = 30.dp)
                         start.linkTo(parent.start)
@@ -241,7 +241,7 @@ fun WeatherInnerScreen(
 
             Surface(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 10.dp)
                     .constrainAs(dailyWeather) {
                         top.linkTo(hourlyWeather.bottom, margin = 10.dp)
                         start.linkTo(parent.start)
@@ -278,7 +278,7 @@ fun WeatherInnerScreen(
                         DailyWeatherItem(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 20.dp, vertical = 5.dp),
+                                .padding(horizontal = 20.dp, vertical = 10.dp),
                             day = dailyWeather.day,
                             weatherType = dailyWeather.weatherTypeIcon,
                             temperature = dailyWeather.temperature,
@@ -291,7 +291,7 @@ fun WeatherInnerScreen(
             WeatherInfos(
                 data = state,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 10.dp)
                     .constrainAs(weatherInfo) {
                         top.linkTo(dailyWeather.bottom, margin = 10.dp)
                         start.linkTo(parent.start)

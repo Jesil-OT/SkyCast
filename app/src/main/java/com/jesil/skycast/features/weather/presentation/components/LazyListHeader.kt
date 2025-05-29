@@ -37,7 +37,7 @@ fun LazyListHeader(
             Icon(
                 modifier = Modifier.padding(
                     start = 20.dp,
-                    top = 5.dp,
+                    top = 10.dp,
                     bottom = 5.dp,
                     end = 5.dp
                 ),
