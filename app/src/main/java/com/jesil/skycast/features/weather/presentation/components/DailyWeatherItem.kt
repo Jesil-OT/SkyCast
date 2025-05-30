@@ -2,11 +2,14 @@ package com.jesil.skycast.features.weather.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,44 +32,51 @@ fun DailyWeatherItem(
     temperature: String,
     minTemperature: String
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        Text(
-            text = day,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.displayMedium.copy(
-                color = Color.White,
-                fontSize = 17.sp
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+        ) {
+            Text(
+                text = day,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.displayMedium.copy(
+                    color = Color.White,
+                    fontSize = 17.sp
+                )
             )
-        )
 
-        Image(
-            painter = painterResource(weatherType.generateIcon()),
-            contentDescription = weatherType,
-            modifier = Modifier
-                .size(30.dp)
-                .weight(1f)
-        )
-        Text(
-            text = temperature,
-            modifier = Modifier,
-            style = MaterialTheme.typography.displayMedium.copy(
-                color = Color.White,
-                fontSize = 15.sp
+            Image(
+                painter = painterResource(weatherType.generateIcon()),
+                contentDescription = weatherType,
+                modifier = Modifier
+                    .size(30.dp)
+                    .weight(1f)
             )
-        )
-        Spacer(Modifier.widthIn(20.dp))
-        Text(
-            text = minTemperature,
-            modifier = Modifier,
-            style = MaterialTheme.typography.displayMedium.copy(
-                color = Color.White.copy(alpha = .5f),
-                fontSize = 15.sp
+            Text(
+                text = temperature,
+                modifier = Modifier,
+                style = MaterialTheme.typography.displayMedium.copy(
+                    color = Color.White,
+                    fontSize = 15.sp
+                )
             )
+            Spacer(Modifier.widthIn(20.dp))
+            Text(
+                text = minTemperature,
+                style = MaterialTheme.typography.displayMedium.copy(
+                    color = Color.White.copy(alpha = .5f),
+                    fontSize = 15.sp
+                )
+            )
+
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            thickness = 1.dp,
+            color = Color.White.copy(.2f)
         )
     }
 }

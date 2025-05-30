@@ -19,20 +19,16 @@ class WeatherViewModel(
 ) : ViewModel() {
     private val tag = "WeatherViewModel"
 
-    init {
-        Timber.tag(tag).d("WeatherViewModel: init")
-    }
-
     private val _weatherViewState = MutableStateFlow<WeatherViewState>(WeatherViewState.Idle)
     val weatherViewState = _weatherViewState
         .onStart {
             // Todo(get users current location)
             getCurrentWeatherFromCurrentLocation(
-                latitude = -30.621959,
-                longitude = 124.624402
+                latitude = 4.740843,
+                longitude = 7.036059
             )
-//            latitude = 4.740843,
-//            longitude = 7.036059
+//            latitude = -30.621959,
+//            longitude = 124.624402
 
         }
         .stateIn(
@@ -64,8 +60,8 @@ class WeatherViewModel(
     fun onAction(action: WeatherAction) {
         when (action) {
             is WeatherAction.Retry -> getCurrentWeatherFromCurrentLocation(
-                latitude = -30.621959,
-                longitude = 124.624402
+                latitude = 4.740843,
+                longitude = 7.036059
             )
         }
     }

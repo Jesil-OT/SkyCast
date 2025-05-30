@@ -2,6 +2,7 @@ package com.jesil.skycast.ui.util
 
 import androidx.compose.ui.text.toLowerCase
 import com.jesil.skycast.ui.util.Constants.MS_TO_KMH
+import com.jesil.skycast.ui.util.Constants.M_TO_KM
 import com.jesil.skycast.ui.util.Constants.TEMP_IN_CELSIUS
 import java.time.Instant
 import java.time.ZoneId
@@ -16,6 +17,8 @@ internal fun Double.convertToCelsius(): Int {
 internal fun Double.convertMsToKhm(): Int {
     return (this * MS_TO_KMH).roundToInt()
 }
+
+internal fun Int.convertMToKM(): Int =  this / M_TO_KM
 
 fun Instant.formatUnixTime(zoneId: String = "UTC"): String =
     DateTimeFormatter.ofPattern("h:mm a")

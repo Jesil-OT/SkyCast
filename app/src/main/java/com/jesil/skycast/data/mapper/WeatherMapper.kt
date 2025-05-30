@@ -11,6 +11,7 @@ import com.jesil.skycast.ui.util.Constants.PRESSURE
 import com.jesil.skycast.ui.util.Constants.TEMP_CELSIUS
 import com.jesil.skycast.ui.util.Constants.VISIBILITY_SPEED
 import com.jesil.skycast.ui.util.Constants.WIND_SPEED
+import com.jesil.skycast.ui.util.convertMToKM
 import com.jesil.skycast.ui.util.convertMsToKhm
 import com.jesil.skycast.ui.util.convertToCelsius
 import com.jesil.skycast.ui.util.formatTimestamp
@@ -36,7 +37,7 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
         pressure = currentWeatherList[0].main.pressure,
         seaLevel = currentWeatherList[0].main.seaLevel,
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
-        visibility = currentWeatherList[0].visibility,
+        visibility = currentWeatherList[0].visibility.convertMToKM(),
         hourlyWeather = currentWeatherList.map { it.toHoursWeather() }.take(9),
         dailyWeather = currentWeatherList.filterDailyEntries().map { it.toHoursWeather() }
     )

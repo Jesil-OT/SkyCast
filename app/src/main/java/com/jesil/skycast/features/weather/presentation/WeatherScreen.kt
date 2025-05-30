@@ -138,7 +138,7 @@ fun WeatherInnerScreen(
                 painter = painterResource(state.weatherTypeIcon.generateIcon()),
                 contentDescription = state.weatherType,
                 modifier = Modifier
-                    .size(180.dp)
+                    .size(160.dp)
                     .constrainAs(weatherType) {
                         top.linkTo(location.bottom)
                         start.linkTo(parent.start)
