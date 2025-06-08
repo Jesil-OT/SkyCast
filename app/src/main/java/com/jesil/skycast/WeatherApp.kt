@@ -2,6 +2,7 @@ package com.jesil.skycast
 
 import android.app.Application
 import com.jesil.skycast.di.appModule
+import com.jesil.skycast.di.dataStoreModule
 import com.jesil.skycast.di.locationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -17,7 +18,8 @@ class WeatherApp: Application() {
             androidLogger()
             modules(
                 appModule,
-                locationModule
+                locationModule,
+                dataStoreModule
             )
         }
     }

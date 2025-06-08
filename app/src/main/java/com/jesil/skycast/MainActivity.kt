@@ -5,19 +5,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.features.location.LocationPermissionScreen
+import com.jesil.skycast.features.location.LocationViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherScreen
 import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.theme.SkyCastTheme
@@ -32,23 +26,27 @@ class MainActivity : ComponentActivity() {
             SkyCastTheme {
                 val navController = rememberNavController()
                 val weatherViewModel: WeatherViewModel = koinViewModel()
-                val state by weatherViewModel.weatherViewState.collectAsStateWithLifecycle()
+                val locationViewModel: LocationViewModel = koinViewModel()
+                val weatherState by weatherViewModel.weatherViewState.collectAsStateWithLifecycle()
+                val locationState by locationViewModel.locationState.collectAsStateWithLifecycle()
+
+                val configureStateDes = if (locationState.isPermissionGranted) Screens.WeatherScreen.route else Screens.LocationScreen.route
 
                 NavHost(
                     navController = navController,
-                    startDestination = Screens.LocationScreen.route
+                    startDestination = configureStateDes
                 ) {
                     composable(Screens.LocationScreen.route) {
                         LocationPermissionScreen(
-                            isPermissionGranted = true,
+                            isPermissionGranted = locationState.isPermissionGranted,
                             navController = navController,
-                            onAction = {}
+                            onAction = locationViewModel::onAction
                         )
                     }
 
                     composable(Screens.WeatherScreen.route) {
                         WeatherScreen(
-                            state = state,
+                            state = weatherState,
                             onActions = weatherViewModel::onAction,
                         )
                     }
