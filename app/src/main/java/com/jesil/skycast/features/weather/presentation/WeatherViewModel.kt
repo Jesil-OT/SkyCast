@@ -14,14 +14,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import timber.log.Timber
 
 class WeatherViewModel(
     private val currentWeatherRepository: CurrentWeatherRepository,
     private val localDataStore: LocalDataStore
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     private val tag = "WeatherViewModel"
-
 
     private val _weatherViewState = MutableStateFlow<WeatherViewState>(WeatherViewState.Loading)
     val weatherViewState = _weatherViewState

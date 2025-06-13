@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.jesil.skycast.data.repository.CurrentWeatherRepoImpl
@@ -19,7 +20,9 @@ import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.util.HttpClientFactory
 import io.ktor.client.engine.cio.CIO
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
@@ -28,24 +31,19 @@ import org.koin.dsl.module
 val appModule = module {
     single { HttpClientFactory.create(CIO.create())}
 
+//    single { androidContext() }
+
+    single<FusedLocationProviderClient> { LocationServices.getFusedLocationProviderClient(androidContext()) } //FusedLocationProviderClient
+
     single { WeatherRemoteDataSource(get()) }
+
+    single<LocalDataStore>{ LocalDataStoreImpl(androidContext()) }
 
     singleOf(::CurrentWeatherRepoImpl) bind CurrentWeatherRepository::class
 
-    viewModelOf(::WeatherViewModel) bind WeatherViewModel::class
-}
+    viewModel{ WeatherViewModel(get(), get()) }
 
-val locationModule =  module {
-    single<Application>(named("appContext")) { androidContext() as Application }
-    single<FusedLocationProviderClient> { LocationServices.getFusedLocationProviderClient(get()) }
+    single<LocationTracker>{ DefaultLocationTracker(get(), androidContext()) }
 
-    singleOf(::DefaultLocationTracker) bind LocationTracker::class
-
-    viewModelOf(::LocationViewModel) bind LocationViewModel::class
-}
-
-val dataStoreModule = module {
-    single<Context>(named("appContext")) { androidContext() }
-
-    singleOf(::LocalDataStoreImpl) bind LocalDataStore::class
+    viewModel { LocationViewModel(get(), get()) }
 }

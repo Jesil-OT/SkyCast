@@ -12,6 +12,9 @@ import com.jesil.skycast.data.source.location.model.Location
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.qualifier.named
 import timber.log.Timber
 
 class LocalDataStoreImpl(

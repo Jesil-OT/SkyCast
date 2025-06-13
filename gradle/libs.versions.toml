@@ -13,7 +13,7 @@ composeBom = "2024.04.01"
 
 secretsGradlePluginVersion = "2.0.1"
 timber = "5.0.1"
-koin = "3.5.6"
+koin = "4.0.3"
 navigationCompose = "2.8.9"
 lottieCompose = "6.6.0"
 ktor = "2.3.12"
@@ -45,6 +45,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 
@@ -71,7 +72,8 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 koin = [
     "koin-core",
     "koin-android",
-    "koin-androidx-compose"
+    "koin-androidx-compose",
+    "koin-compose-viewmodel"
 ]
 ktor = [
     "ktor-client-cio",
