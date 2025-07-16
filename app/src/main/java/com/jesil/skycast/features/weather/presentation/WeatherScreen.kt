@@ -26,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -39,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jesil.skycast.R
 import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.features.weather.models.WeatherViewState
@@ -53,12 +55,16 @@ import com.jesil.skycast.features.weather.presentation.events.WeatherAction
 import com.jesil.skycast.ui.theme.SkyCastTheme
 import com.jesil.skycast.ui.util.generateBackgroundColor
 import com.jesil.skycast.ui.util.generateIcon
+import org.koin.androidx.compose.koinViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import timber.log.Timber
 
 @Composable
 fun WeatherScreen(
     state: WeatherViewState,
     onActions: (WeatherAction) -> Unit,
 ) {
+    Timber.d("WeatherScreen!!!!!: The state is $state")
     when (state) {
         is WeatherViewState.Error -> {
             ErrorScreen(
@@ -67,15 +73,13 @@ fun WeatherScreen(
             )
         }
 
-        is WeatherViewState.Idle -> {}
-
         is WeatherViewState.Loading -> {
             LoadingScreen(modifier = Modifier.fillMaxSize())
         }
 
         is WeatherViewState.Success -> {
             WeatherInnerScreen(
-                state = state.data
+                state = state.data,
             )
         }
     }

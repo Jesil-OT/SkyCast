@@ -1,19 +1,17 @@
-package com.jesil.skycast.features.location
+package com.jesil.skycast.features.location.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jesil.skycast.data.source.data_store.LocalDataStore
 import com.jesil.skycast.data.source.location.LocationTracker
 import com.jesil.skycast.features.location.model.LocationState
-import com.jesil.skycast.features.location.presentation.components.LocationAction
 import com.jesil.skycast.ui.util.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 
 class LocationViewModel(
     private val locationTracker: LocationTracker,
@@ -21,22 +19,10 @@ class LocationViewModel(
 ) : ViewModel() {
 
     private val _locationState = MutableStateFlow(LocationState())
-    val locationState = _locationState.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = LocationState()
-    )
+    val locationState = _locationState
 
-
-    fun onAction(action: LocationAction) {
-        when (action) {
-            is LocationAction.RequestPermission -> getCurrentLocation()
-        }
-    }
-
-    private fun getCurrentLocation() = viewModelScope.launch {
+    fun getCurrentLocation() = viewModelScope.launch {
         locationTracker.getCurrentLocation().let { location ->
-//            isPermissionGranted.value = location is Response.Success
             when (location) {
                 is Response.Error -> {
                     //TODO: Handle error

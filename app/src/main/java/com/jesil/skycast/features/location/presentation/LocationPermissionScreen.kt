@@ -1,5 +1,9 @@
-package com.jesil.skycast.features.location
+package com.jesil.skycast.features.location.presentation
 
+import android.Manifest
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +21,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,19 +36,35 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
 import com.jesil.skycast.Screens
-import com.jesil.skycast.features.location.presentation.components.LocationAction
 import com.jesil.skycast.features.location.presentation.components.LocationButton
 import com.jesil.skycast.ui.theme.SkyCastTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LocationPermissionScreen(
-    isPermissionGranted: Boolean,
-    navController: NavController,
-    onAction: (LocationAction) -> Unit
+    onNext: () -> Unit,
 ) {
+    val locationViewModel: LocationViewModel = koinViewModel()
+    var isPermissionGranted by remember { mutableStateOf(false) }
+    
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val arePermissionsGranted = permissions.values.reduce { acc, next -> acc && next }
+        isPermissionGranted = if (arePermissionsGranted) {
+    //            onPermissionGranted()
+            locationViewModel.getCurrentLocation()
+            true
+        } else {
+    //            onPermissionDenied()
+            false
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,7 +103,14 @@ fun LocationPermissionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp),
-                onClick = { onAction(LocationAction.RequestPermission) },
+                onClick = {
+                    locationPermissionLauncher.launch(
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
+                    )
+                },
                 icon = {
                     Icon(
                         imageVector = Icons.Rounded.CheckCircle,
@@ -101,12 +133,7 @@ fun LocationPermissionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp),
-                onClick = {
-                    navController.run {
-                        popBackStack()
-                        navigate(Screens.WeatherScreen.route)
-                    }
-                },
+                onClick = onNext,
                 icon = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
@@ -128,13 +155,56 @@ fun LocationPermissionScreen(
     }
 }
 
+@Composable
+fun rememberLocationPermissionLauncher(
+    onPermissionGranted: () -> Unit,
+    onPermissionDenied: () -> Unit
+): ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>> {
+    return rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val arePermissionsGranted = permissions.values.reduce { acc, next -> acc && next }
+        if (arePermissionsGranted) {
+            onPermissionGranted()
+        } else {
+            onPermissionDenied()
+        }
+    }
+}
+
+@Composable
+fun RequestLocationPermissionUsingRememberLauncherForActivityResult(
+    onPermissionGranted: () -> Unit,
+    onPermissionDenied: () -> Unit,
+) {
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val arePermissionsGranted = permissions.values.reduce { acc, next -> acc && next }
+        if (arePermissionsGranted) {
+            onPermissionGranted()
+        } else {
+            onPermissionDenied()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        locationPermissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+}
+
 @PreviewLightDark
 @Composable
 private fun LocationPermissionScreenPreview() {
     SkyCastTheme {
         LocationPermissionScreen(
-            isPermissionGranted = false,
-            navController = rememberNavController()
-        ) { }
+//            navController = rememberNavController(),
+            onNext = {}
+        )
     }
 }

@@ -8,14 +8,12 @@ import com.jesil.skycast.data.source.data_store.LocalDataStore
 import com.jesil.skycast.features.weather.models.WeatherViewState
 import com.jesil.skycast.features.weather.presentation.events.WeatherAction
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import timber.log.Timber
 
 class WeatherViewModel(
@@ -25,38 +23,27 @@ class WeatherViewModel(
     private val tag = "WeatherViewModel"
 
     private val _weatherViewState = MutableStateFlow<WeatherViewState>(WeatherViewState.Loading)
-    val weatherViewState = _weatherViewState
-        .onStart {
-            localDataStore.getLocation().collectLatest { location ->
-                getCurrentWeatherFromCurrentLocation(
-                    latitude = location.latitude,
-                    longitude = location.longitude
-                )
-            }
-//            // Todo(get users current location)
+    val weatherViewState = _weatherViewState.asStateFlow()
+    // Todo(get users current location)
 //            getCurrentWeatherFromCurrentLocation(
 //                latitude = 4.740843,
 //                longitude = 7.036059
 //            )
 //            latitude = -30.621959,
 //            longitude = 124.624402
-            //for testing Port Harcourt
+    //for testing Port Harcourt
 //            latitude = 4.740843,
 //            longitude = 7.036059
 
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = WeatherViewState.Idle
-        )
+    init { getCurrentWeatherFromCurrentLocation() }
 
-    private fun getCurrentWeatherFromCurrentLocation(latitude: Double, longitude: Double) {
+    private fun getCurrentWeatherFromCurrentLocation() {
         viewModelScope.launch {
-            _weatherViewState.value = WeatherViewState.Idle
+//            _weatherViewState.value = WeatherViewState.Idle
+            val currentLatLong = localDataStore.getLocation().firstOrNull()
             currentWeatherRepository.fetchCurrentWeather(
-                latitude = latitude,
-                longitude = longitude
+                latitude = currentLatLong?.latitude ?: 0.0,
+                longitude = currentLatLong?.longitude ?: 0.0
             ).onStart {
                 _weatherViewState.value = WeatherViewState.Loading
             }.catch { err ->
@@ -73,16 +60,8 @@ class WeatherViewModel(
 
     fun onAction(action: WeatherAction) {
         when (action) {
-            is WeatherAction.Retry -> {
-                viewModelScope.launch {
-                    localDataStore.getLocation().collectLatest { location ->
-                        getCurrentWeatherFromCurrentLocation(
-                            latitude = location.latitude,
-                            longitude = location.longitude
-                        )
-                    }
-                }
-            }
+            is WeatherAction.Retry -> getCurrentWeatherFromCurrentLocation()
+
         }
     }
 }

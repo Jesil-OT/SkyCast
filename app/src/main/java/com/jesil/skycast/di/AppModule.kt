@@ -15,7 +15,7 @@ import com.jesil.skycast.data.source.data_store.LocalDataStoreImpl
 import com.jesil.skycast.data.source.location.DefaultLocationTracker
 import com.jesil.skycast.data.source.location.LocationTracker
 import com.jesil.skycast.data.source.remote.WeatherRemoteDataSource
-import com.jesil.skycast.features.location.LocationViewModel
+import com.jesil.skycast.features.location.presentation.LocationViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.util.HttpClientFactory
 import io.ktor.client.engine.cio.CIO

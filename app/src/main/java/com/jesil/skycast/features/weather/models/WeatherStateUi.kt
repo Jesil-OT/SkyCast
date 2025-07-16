@@ -23,7 +23,6 @@ data class WeatherStateUi(
 )
 
 sealed class WeatherViewState{
-    object Idle: WeatherViewState()
     object Loading: WeatherViewState()
     data class Success(val data: WeatherStateUi): WeatherViewState()
     data class Error(val message: String): WeatherViewState()
