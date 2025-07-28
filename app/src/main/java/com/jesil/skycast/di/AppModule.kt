@@ -31,8 +31,6 @@ import org.koin.dsl.module
 val appModule = module {
     single { HttpClientFactory.create(CIO.create())}
 
-//    single { androidContext() }
-
     single<FusedLocationProviderClient> { LocationServices.getFusedLocationProviderClient(androidContext()) } //FusedLocationProviderClient
 
     single { WeatherRemoteDataSource(get()) }

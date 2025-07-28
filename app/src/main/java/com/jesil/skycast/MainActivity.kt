@@ -31,43 +31,38 @@ import com.jesil.skycast.ui.theme.SkyCastTheme
 import org.koin.androidx.compose.koinViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        var startDes = Screens.LocationScreen.route
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-            startDes = if ( it[Manifest.permission.ACCESS_FINE_LOCATION] == true  && it[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-                Screens.WeatherScreen.route
-            } else {
-                Screens.LocationScreen.route
-            }
-
-        }.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ))
         setContent {
             SkyCastTheme {
                 val navController = rememberNavController()
-
                 NavHost(
                     navController = navController,
-                    startDestination = startDes
+                    startDestination = if (ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        Screens.WeatherScreen.route
+                    } else {
+                        Screens.LocationScreen.route
+                    }
                 ) {
                     composable(Screens.LocationScreen.route) {
                         LocationPermissionScreen(
-                           onNext = {
-                               navController.navigate(Screens.WeatherScreen.route){
-                                   popUpTo(Screens.LocationScreen.route){
-                                       inclusive = true
-                                   }
-                               }
-                           }
+                            onNext = {
+                                navController.navigate(Screens.WeatherScreen.route) {
+                                    popUpTo(Screens.LocationScreen.route) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
                         )
                     }
 

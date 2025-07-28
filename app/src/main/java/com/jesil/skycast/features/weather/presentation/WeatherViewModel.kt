@@ -24,22 +24,11 @@ class WeatherViewModel(
 
     private val _weatherViewState = MutableStateFlow<WeatherViewState>(WeatherViewState.Loading)
     val weatherViewState = _weatherViewState.asStateFlow()
-    // Todo(get users current location)
-//            getCurrentWeatherFromCurrentLocation(
-//                latitude = 4.740843,
-//                longitude = 7.036059
-//            )
-//            latitude = -30.621959,
-//            longitude = 124.624402
-    //for testing Port Harcourt
-//            latitude = 4.740843,
-//            longitude = 7.036059
 
     init { getCurrentWeatherFromCurrentLocation() }
 
     private fun getCurrentWeatherFromCurrentLocation() {
         viewModelScope.launch {
-//            _weatherViewState.value = WeatherViewState.Idle
             val currentLatLong = localDataStore.getLocation().firstOrNull()
             currentWeatherRepository.fetchCurrentWeather(
                 latitude = currentLatLong?.latitude ?: 0.0,

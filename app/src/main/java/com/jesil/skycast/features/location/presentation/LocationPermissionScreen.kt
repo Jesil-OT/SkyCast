@@ -56,11 +56,9 @@ fun LocationPermissionScreen(
     ) { permissions ->
         val arePermissionsGranted = permissions.values.reduce { acc, next -> acc && next }
         isPermissionGranted = if (arePermissionsGranted) {
-    //            onPermissionGranted()
             locationViewModel.getCurrentLocation()
             true
         } else {
-    //            onPermissionDenied()
             false
         }
     }
@@ -152,49 +150,6 @@ fun LocationPermissionScreen(
                 }
             )
         }
-    }
-}
-
-@Composable
-fun rememberLocationPermissionLauncher(
-    onPermissionGranted: () -> Unit,
-    onPermissionDenied: () -> Unit
-): ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>> {
-    return rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val arePermissionsGranted = permissions.values.reduce { acc, next -> acc && next }
-        if (arePermissionsGranted) {
-            onPermissionGranted()
-        } else {
-            onPermissionDenied()
-        }
-    }
-}
-
-@Composable
-fun RequestLocationPermissionUsingRememberLauncherForActivityResult(
-    onPermissionGranted: () -> Unit,
-    onPermissionDenied: () -> Unit,
-) {
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val arePermissionsGranted = permissions.values.reduce { acc, next -> acc && next }
-        if (arePermissionsGranted) {
-            onPermissionGranted()
-        } else {
-            onPermissionDenied()
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        locationPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
     }
 }
 
