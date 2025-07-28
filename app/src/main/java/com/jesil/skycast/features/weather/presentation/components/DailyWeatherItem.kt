@@ -33,6 +33,11 @@ fun DailyWeatherItem(
     minTemperature: String
 ) {
     Column {
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            thickness = 1.dp,
+            color = Color.White.copy(.2f)
+        )
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
@@ -73,11 +78,6 @@ fun DailyWeatherItem(
             )
 
         }
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            thickness = 1.dp,
-            color = Color.White.copy(.2f)
-        )
     }
 }
 

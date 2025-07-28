@@ -1,5 +1,6 @@
 package com.jesil.skycast.features.weather.presentation
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -49,6 +52,7 @@ import com.jesil.skycast.features.weather.presentation.components.ErrorScreen
 import com.jesil.skycast.features.weather.presentation.components.HoursWeatherItem
 import com.jesil.skycast.features.weather.presentation.components.LazyListHeader
 import com.jesil.skycast.features.weather.presentation.components.LoadingScreen
+import com.jesil.skycast.features.weather.presentation.components.Location
 import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
 import com.jesil.skycast.features.weather.presentation.components.WeatherInfos
 import com.jesil.skycast.features.weather.presentation.events.WeatherAction
@@ -88,9 +92,18 @@ fun WeatherScreen(
 @Composable
 fun WeatherInnerScreen(
     state: WeatherStateUi,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val backgroundColor = state.weatherTypeIcon.generateBackgroundColor()
+    val backgroundColorStateTop by animateColorAsState(
+        targetValue = backgroundColor[0],
+        label = "background_color_top"
+    )
+    val backgroundColorStateBottom by animateColorAsState(
+        targetValue = backgroundColor[1],
+        label = "background_color_bottom"
+    )
+
     Scaffold(
         topBar = {
             LocationTopBar(
@@ -103,49 +116,38 @@ fun WeatherInnerScreen(
         ConstraintLayout(
             modifier = modifier
                 .background(
-                    Brush.verticalGradient(colors = backgroundColor)
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            backgroundColorStateTop,
+                            backgroundColorStateBottom
+                        )
+                    )
                 )
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            val (locationIcon, location, weatherType, temperature, weatherTypeDescription, feelLike,
+            val (location, weatherType, temperature, weatherTypeDescription, feelLike,
                 hourlyWeather, dailyWeather, weatherInfo) = createRefs()
             val daysCount = state.dailyWeather.size.toString()
 
-            Icon(
-                imageVector = Icons.Default.LocationOn,
-                contentDescription = state.location,
-                tint = Color.White,
-                modifier = Modifier
-                    .constrainAs(locationIcon) {
-                        top.linkTo(location.top)
-                        end.linkTo(location.start)
-                        bottom.linkTo(location.bottom)
-                    }
-            )
-
-            Text(
-                text = state.location,
-                style = MaterialTheme.typography.displayMedium,
-                color = Color.White,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold,
+            Location(
+               location = state.location,
                 modifier = Modifier
                     .constrainAs(location) {
-                    top.linkTo(parent.top, margin = 20.dp)
-                    end.linkTo(parent.end)
-                    start.linkTo(parent.start, margin = 20.dp)
-                }
+                        top.linkTo(parent.top, margin = 20.dp)
+                        start.linkTo(parent.start, margin = 25.dp)
+                        end.linkTo(parent.end, margin = 25.dp)
+                    }
             )
             Image(
                 painter = painterResource(state.weatherTypeIcon.generateIcon()),
                 contentDescription = state.weatherType,
                 modifier = Modifier
-                    .size(160.dp)
+                    .offset(y = (-40).dp, x = 100.dp)
+                    .size(270.dp)
                     .constrainAs(weatherType) {
                         top.linkTo(location.bottom)
-                        start.linkTo(parent.start)
                         end.linkTo(parent.end)
                     }
             )
@@ -157,10 +159,11 @@ fun WeatherInnerScreen(
                 fontSize = 70.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
+                    .offset(y = (-10).dp)
                     .constrainAs(temperature) {
-                        top.linkTo(weatherType.bottom)
-                        start.linkTo(parent.start,)
-                        end.linkTo(parent.end)
+                        top.linkTo(weatherType.top)
+                        bottom.linkTo(weatherType.bottom)
+                        start.linkTo(parent.start, margin = 25.dp)
                     }
             )
 
@@ -171,11 +174,10 @@ fun WeatherInnerScreen(
                 fontSize = 17.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .fillMaxWidth()
                     .constrainAs(weatherTypeDescription) {
-                        top.linkTo(temperature.bottom, margin = 10.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
+                        bottom.linkTo(temperature.bottom)
+                        start.linkTo(parent.start, margin = 25.dp)
+                        top.linkTo(temperature.bottom, margin = 25.dp)
                     }
             )
 
@@ -187,11 +189,9 @@ fun WeatherInnerScreen(
                     textAlign = TextAlign.Center
                 ),
                 modifier = Modifier
-                    .fillMaxWidth()
                     .constrainAs(feelLike) {
-                        top.linkTo(weatherTypeDescription.bottom, margin = 10.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
+                        top.linkTo(temperature.bottom, margin = 10.dp)
+                        start.linkTo(parent.start, margin = 25.dp)
                     }
             )
 
@@ -222,6 +222,11 @@ fun WeatherInnerScreen(
                         }
                     )
 
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                        thickness = 1.dp,
+                        color = Color.White.copy(.2f)
+                    )
                     Spacer(modifier = Modifier.height(5.dp))
 
                     LazyRow(

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -26,6 +28,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jesil.skycast.R
+import com.jesil.skycast.data.source.location.model.Location
 import com.jesil.skycast.ui.theme.RainyBlue2
 import com.jesil.skycast.ui.theme.SkyCastTheme
 
@@ -76,6 +79,31 @@ fun WeatherInfoItem(
             )
         }
 
+    }
+}
+
+@Composable
+fun Location(
+    modifier: Modifier = Modifier,
+    location: String,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = Icons.Default.LocationOn,
+            contentDescription = location,
+            tint = Color.White,
+        )
+
+        Text(
+            text =location,
+            style = MaterialTheme.typography.displayMedium,
+            color = Color.White,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+        )
     }
 }
 

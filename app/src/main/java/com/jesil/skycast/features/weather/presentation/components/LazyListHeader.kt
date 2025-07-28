@@ -49,10 +49,10 @@ fun LazyListHeader(
             headerTitle.invoke()
         }
 
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            thickness = 1.dp,
-            color = Color.White.copy(.2f)
-        )
+//        HorizontalDivider(
+//            modifier = Modifier.padding(horizontal = 20.dp),
+//            thickness = 1.dp,
+//            color = Color.White.copy(.2f)
+//        )
     }
 }
