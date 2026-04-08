@@ -30,9 +30,12 @@ class WeatherViewModel(
     private fun getCurrentWeatherFromCurrentLocation() {
         viewModelScope.launch {
             val currentLatLong = localDataStore.getLocation().firstOrNull()
+//            currentWeatherRepository.fetchCurrentWeather(
+//                latitude = currentLatLong?.latitude ?: 0.0,
+//                longitude = currentLatLong?.longitude ?: 0.0
             currentWeatherRepository.fetchCurrentWeather(
-                latitude = currentLatLong?.latitude ?: 0.0,
-                longitude = currentLatLong?.longitude ?: 0.0
+                latitude = 33.44,
+                longitude = -94.04
             ).onStart {
                 _weatherViewState.value = WeatherViewState.Loading
             }.catch { err ->
@@ -50,7 +53,6 @@ class WeatherViewModel(
     fun onAction(action: WeatherAction) {
         when (action) {
             is WeatherAction.Retry -> getCurrentWeatherFromCurrentLocation()
-
         }
     }
 }

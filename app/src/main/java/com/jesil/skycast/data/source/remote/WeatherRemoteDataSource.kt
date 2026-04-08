@@ -26,11 +26,11 @@ class WeatherRemoteDataSource(
     ) =
         safeApiCall<WeatherListRemoteDto> {
             httpClient.get(
-                urlString = BuildConfig.SERVER_URL + WEATHER_LIST_END_POINT
+                urlString = "https://api.openweathermap.org$WEATHER_LIST_END_POINT"
             ) {
                 parameter(LATITUDE, latitude)
                 parameter(LONGITUDE, longitude)
-                parameter(APP_ID, BuildConfig.SERVER_API_KEY)
+                parameter(APP_ID, "84eeb8573a9c1f8cecde6a1c53f425ac")
             }
         }.flowOn(Dispatchers.IO)
             .map { response ->

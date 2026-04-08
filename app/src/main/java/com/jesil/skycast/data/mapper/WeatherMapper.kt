@@ -46,7 +46,7 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
 private fun List<SingleWeather>.filterDailyEntries(): List<SingleWeather> {
     val daysSeen = mutableSetOf<String>()
     return this.filter { forecast ->
-        val dayKey = forecast.dateInText.substring(0, 10) // Extract "YYYY-MM-DD" eg 2023-06-28
+        val dayKey = forecast.dateInText.take( 10) // Extract "YYYY-MM-DD" eg 2023-06-28
         daysSeen.add(dayKey) // Returns true if day wasn't in set
     }
 }
