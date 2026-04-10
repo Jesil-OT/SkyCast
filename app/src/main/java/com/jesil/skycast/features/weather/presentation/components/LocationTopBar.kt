@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,9 +27,9 @@ import com.jesil.skycast.ui.theme.SkyCastTheme
 
 @Composable
 fun LocationTopBar(
+    modifier: Modifier = Modifier,
     date: String,
     temperatureUnit: String = "°C",
-    modifier: Modifier = Modifier,
     onNavigationClick: () -> Unit,
 ) {
     ConstraintLayout(
@@ -38,20 +40,22 @@ fun LocationTopBar(
         val (navIcon, locationText, unitText) = createRefs()
         createHorizontalChain(navIcon, locationText, unitText, chainStyle = ChainStyle.SpreadInside)
 
-        Icon(
-            imageVector = Icons.Default.Menu,
-            contentDescription = stringResource(R.string.menu),
-            tint = Color.White,
+        IconButton(
             modifier = Modifier
-                .padding(start = 30.dp)
-                .clickable { onNavigationClick() }
+                .padding(start = 20.dp)
                 .constrainAs(navIcon) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                }
-        )
-
+                },
+            onClick = onNavigationClick,
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.List,
+                contentDescription = stringResource(R.string.menu),
+                tint = Color.White,
+            )
+        }
         Text(
             text = date,
             style = MaterialTheme.typography.displayMedium,

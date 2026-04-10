@@ -44,7 +44,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
+import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.features.weather.models.WeatherViewState
 import com.jesil.skycast.features.weather.presentation.components.DailyWeatherItem
@@ -67,6 +70,7 @@ import timber.log.Timber
 fun WeatherScreen(
     state: WeatherViewState,
     onActions: (WeatherAction) -> Unit,
+    navController: NavController
 ) {
     Timber.d("WeatherScreen!!!!!: The state is $state")
     when (state) {
@@ -84,6 +88,7 @@ fun WeatherScreen(
         is WeatherViewState.Success -> {
             WeatherInnerScreen(
                 state = state.data,
+                navController = navController
             )
         }
     }
@@ -93,6 +98,7 @@ fun WeatherScreen(
 fun WeatherInnerScreen(
     state: WeatherStateUi,
     modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     val backgroundColor = state.weatherTypeIcon.generateBackgroundColor()
     val backgroundColorStateTop by animateColorAsState(
@@ -109,7 +115,7 @@ fun WeatherInnerScreen(
             LocationTopBar(
                 modifier = Modifier.padding(top = 30.dp),
                 date = state.time,
-                onNavigationClick = {}
+                onNavigationClick = { navController.navigate(Screens.CitiesScreen.route) }
             )
         }
     ) { innerPadding ->
@@ -319,25 +325,27 @@ private fun WeatherScreenPreview() {
     SkyCastTheme {
         WeatherScreen(
             state = WeatherViewState.Success(
-                data = WeatherStateUi(
-                    location = "Lagos, NG",
-                    temperature = "31°",
-                    weatherType = "Clear sky",
-                    weatherTypeDescription = "clear sky",
-                    weatherTypeIcon = "01d",
-                    windSpeed = "11 km/h",
-                    humidity = "94%",
-                    rainChance = "0.13",
-                    timeZone = "West Africa Time",
-                    time = "Mon, July 6",
-                    sunrise = "3:55 am",
-                    sunset = "7:00 pm",
-                    pressure = "1009 hpa",
-                    minTemperature = "29°C",
-                )
+                data = weatherUiState
             ),
-            onActions = {}
+            onActions = {},
+            navController = rememberNavController()
         )
 
     }
 }
+internal val weatherUiState = WeatherStateUi(
+    location = "Lagos, NG",
+    temperature = "31°",
+    weatherType = "Clear sky",
+    weatherTypeDescription = "clear sky",
+    weatherTypeIcon = "01d",
+    windSpeed = "11 km/h",
+    humidity = "94%",
+    rainChance = "0.13",
+    timeZone = "West Africa Time",
+    time = "Mon, July 6",
+    sunrise = "3:55 am",
+    sunset = "7:00 pm",
+    pressure = "1009 hpa",
+    minTemperature = "29°C",
+)

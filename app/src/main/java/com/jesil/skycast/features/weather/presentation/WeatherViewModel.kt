@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import timber.log.Timber
@@ -37,11 +38,11 @@ class WeatherViewModel(
                 latitude = 33.44,
                 longitude = -94.04
             ).onStart {
-                _weatherViewState.value = WeatherViewState.Loading
+                _weatherViewState.update {  WeatherViewState.Loading }
             }.catch { err ->
-                _weatherViewState.value = WeatherViewState.Error(err.message.toString())
+                _weatherViewState.update {  WeatherViewState.Error(err.message.toString()) }
             }.collect { data ->
-                _weatherViewState.value = WeatherViewState.Success(data.toCurrentWeatherUI())
+                _weatherViewState.update { WeatherViewState.Success(data.toCurrentWeatherUI()) }
                 Timber.tag(tag)
                     .d("getCurrentWeather: The current weather from data is $data ")
                 Timber.tag(tag)
