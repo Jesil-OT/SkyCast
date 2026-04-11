@@ -39,7 +39,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
-import com.jesil.skycast.Screens
+import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.location.presentation.components.LocationButton
 import com.jesil.skycast.ui.theme.SkyCastTheme
 import org.koin.androidx.compose.koinViewModel

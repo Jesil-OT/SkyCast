@@ -11,6 +11,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +24,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.jesil.skycast.core.navigation.Screens
+import com.jesil.skycast.features.cities.presentation.CitiesScreen
+import com.jesil.skycast.features.cities.presentation.CitiesViewModel
 import com.jesil.skycast.features.location.presentation.LocationPermissionScreen
 import com.jesil.skycast.features.location.presentation.LocationViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherScreen
@@ -73,6 +79,20 @@ class MainActivity : ComponentActivity() {
                         WeatherScreen(
                             state = weatherState,
                             onActions = weatherViewModel::onAction,
+                            navController = navController
+                        )
+                    }
+
+                    composable(Screens.CitiesScreen.route) {
+                        val citiesViewModel: CitiesViewModel = koinViewModel()
+                        val citiesState by citiesViewModel.state.collectAsStateWithLifecycle()
+                        val selectedCities by citiesViewModel.selectedCities.collectAsStateWithLifecycle()
+
+                        CitiesScreen(
+                            state = citiesState,
+                            onActions = citiesViewModel::onAction,
+                            selectedCities = selectedCities,
+                            navController = navController
                         )
                     }
                 }

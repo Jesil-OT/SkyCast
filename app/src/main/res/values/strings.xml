@@ -17,4 +17,6 @@
     <string name="days_forecast">%1$s-DAYS FORECAST</string>
     <string name="hourly_forecast">3-HOURLY FORECAST</string>
     <string name="visibility">Visibility</string>
+    <string name="delete">Delete</string>
+    <string name="no_city_found">No cities found, add some to get started by searching for a city</string>
 </resources>
