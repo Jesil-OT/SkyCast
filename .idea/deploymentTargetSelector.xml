@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-10T07:07:21.252230221Z">
+        <DropdownSelection timestamp="2026-04-11T20:41:33.035478394Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="FirebaseDirectAccess" identifier="reservation=projects/amakasamtv-c96ca/deviceSessions/session-12jdq3851wcbq" />
+              <DeviceId pluginId="FirebaseDirectAccess" identifier="reservation=projects/fir-travelmantics/deviceSessions/session-2lyb2bbahxn06" />
             </handle>
             <template>
               <DeviceId pluginId="FirebaseDirectAccess" type="TEMPLATE" identifier="model_id=A402SO/34" />
@@ -15,6 +15,9 @@
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="WeatherCityItemPreview">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

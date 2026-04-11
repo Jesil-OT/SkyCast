@@ -30,7 +30,7 @@ class WeatherRemoteDataSource(
             ) {
                 parameter(LATITUDE, latitude)
                 parameter(LONGITUDE, longitude)
-                parameter(APP_ID, "84eeb8573a9c1f8cecde6a1c53f425ac")
+                parameter(APP_ID, BuildConfig.APP_ID)
             }
         }.flowOn(Dispatchers.IO)
             .map { response ->

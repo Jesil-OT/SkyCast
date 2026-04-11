@@ -28,6 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.cities.presentation.CitiesScreen
+import com.jesil.skycast.features.cities.presentation.CitiesViewModel
 import com.jesil.skycast.features.location.presentation.LocationPermissionScreen
 import com.jesil.skycast.features.location.presentation.LocationViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherScreen
@@ -83,7 +84,14 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(Screens.CitiesScreen.route) {
+                        val citiesViewModel: CitiesViewModel = koinViewModel()
+                        val citiesState by citiesViewModel.state.collectAsStateWithLifecycle()
+                        val selectedCities by citiesViewModel.selectedCities.collectAsStateWithLifecycle()
+
                         CitiesScreen(
+                            state = citiesState,
+                            onActions = citiesViewModel::onAction,
+                            selectedCities = selectedCities,
                             navController = navController
                         )
                     }
