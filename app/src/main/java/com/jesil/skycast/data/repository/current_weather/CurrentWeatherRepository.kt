@@ -1,7 +1,6 @@
-package com.jesil.skycast.data.repository
+package com.jesil.skycast.data.repository.current_weather
 
 import com.jesil.skycast.data.model.CurrentDailyWeather
-import com.jesil.skycast.ui.util.Response
 import kotlinx.coroutines.flow.Flow
 
 interface CurrentWeatherRepository {

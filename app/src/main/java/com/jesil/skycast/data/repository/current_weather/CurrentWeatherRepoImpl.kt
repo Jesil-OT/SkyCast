@@ -1,4 +1,4 @@
-package com.jesil.skycast.data.repository
+package com.jesil.skycast.data.repository.current_weather
 
 import com.jesil.skycast.data.mapper.toCurrentDailyWeather
 import com.jesil.skycast.data.model.CurrentDailyWeather
