@@ -1,8 +1,11 @@
 package com.jesil.skycast.data.mapper
 
 import com.jesil.skycast.data.model.CurrentDailyWeather
+import com.jesil.skycast.data.model.SearchCities
+import com.jesil.skycast.data.source.remote.model.SearchRemoteDto
 import com.jesil.skycast.data.source.remote.model.SingleWeather
 import com.jesil.skycast.data.source.remote.model.WeatherListRemoteDto
+import com.jesil.skycast.features.search.model.SearchCitiesStateUi
 import com.jesil.skycast.features.weather.models.DailyWeatherStateUi
 import com.jesil.skycast.features.weather.models.HoursWeatherStateUi
 import com.jesil.skycast.features.weather.models.WeatherStateUi
@@ -49,6 +52,20 @@ private fun List<SingleWeather>.filterDailyEntries(): List<SingleWeather> {
         val dayKey = forecast.dateInText.take( 10) // Extract "YYYY-MM-DD" eg 2023-06-28
         daysSeen.add(dayKey) // Returns true if day wasn't in set
     }
+}
+
+fun List<SearchRemoteDto>.toSearchCities(): List<SearchCities> {
+    return this.map { it.toSearchCities() }
+}
+
+fun SearchRemoteDto.toSearchCities(): SearchCities {
+    return SearchCities(
+        placeName = placeName,
+        latitude = latitude,
+        longitude = longitude,
+        country = country,
+        state = state
+    )
 }
 
 fun SingleWeather.toHoursWeather(): CurrentDailyWeather {
@@ -110,5 +127,17 @@ fun CurrentDailyWeather.toDailyWeatherUI(): DailyWeatherStateUi {
         weatherTypeIcon = weatherTypeIcon,
         temperature = temperature.toString() + TEMP_CELSIUS,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS
+    )
+}
+
+fun List<SearchCities>.toSearchCitiesUI(): List<SearchCitiesStateUi>{
+    return this.map { it.toSearchCitiesUI() }
+}
+
+fun SearchCities.toSearchCitiesUI(): SearchCitiesStateUi {
+    return SearchCitiesStateUi(
+        cityName = "$placeName $state, $country",
+        latitude = latitude,
+        longitude = longitude
     )
 }

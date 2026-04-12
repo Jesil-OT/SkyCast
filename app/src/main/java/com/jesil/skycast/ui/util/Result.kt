@@ -4,6 +4,7 @@ import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -64,7 +65,7 @@ inline fun <reified T> safeApiCall(
     } catch (e: SerializationException) {
         emit(Response.Error("NetworkError.SERIALIZATION_ERROR"))
     } catch (e: Exception) {
-        coroutineContext.ensureActive()
+        currentCoroutineContext().ensureActive()
         emit(Response.Error("NetworkError.UNKNOWN_ERROR"))
     }
 }

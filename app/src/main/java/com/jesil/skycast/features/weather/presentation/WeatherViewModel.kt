@@ -3,7 +3,7 @@ package com.jesil.skycast.features.weather.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jesil.skycast.data.mapper.toCurrentWeatherUI
-import com.jesil.skycast.data.repository.CurrentWeatherRepository
+import com.jesil.skycast.data.repository.current_weather.CurrentWeatherRepository
 import com.jesil.skycast.data.source.data_store.LocalDataStore
 import com.jesil.skycast.features.weather.models.WeatherViewState
 import com.jesil.skycast.features.weather.presentation.events.WeatherAction

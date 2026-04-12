@@ -2,6 +2,7 @@ package com.jesil.skycast.data.source.remote
 
 import com.jesil.skycast.BuildConfig
 import com.jesil.skycast.data.source.remote.model.WeatherListRemoteDto
+import com.jesil.skycast.ui.util.Constants
 import com.jesil.skycast.ui.util.Constants.APP_ID
 import com.jesil.skycast.ui.util.Constants.LATITUDE
 import com.jesil.skycast.ui.util.Constants.LONGITUDE
@@ -26,7 +27,7 @@ class WeatherRemoteDataSource(
     ) =
         safeApiCall<WeatherListRemoteDto> {
             httpClient.get(
-                urlString = "https://api.openweathermap.org$WEATHER_LIST_END_POINT"
+                urlString = Constants.BASE_URL + WEATHER_LIST_END_POINT
             ) {
                 parameter(LATITUDE, latitude)
                 parameter(LONGITUDE, longitude)
