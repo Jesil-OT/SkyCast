@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
+import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.cities.models.CityModel
 import com.jesil.skycast.features.cities.presentation.components.SearchBarDisplay
 import com.jesil.skycast.features.cities.presentation.components.WeatherCityItem
@@ -113,7 +114,8 @@ fun CitiesScreen(
                 SearchBarDisplay(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 10.dp)
+                        .padding(horizontal = 20.dp, vertical = 10.dp),
+                    onClick = { navController.navigate(Screens.SearchCitiesScreen.route) }
                 )
                 AnimatedContent(
                     targetState = state.isEmpty(),

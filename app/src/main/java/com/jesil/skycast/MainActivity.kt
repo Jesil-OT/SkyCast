@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -31,11 +33,12 @@ import com.jesil.skycast.features.cities.presentation.CitiesScreen
 import com.jesil.skycast.features.cities.presentation.CitiesViewModel
 import com.jesil.skycast.features.location.presentation.LocationPermissionScreen
 import com.jesil.skycast.features.location.presentation.LocationViewModel
+import com.jesil.skycast.features.search.presentation.SearchCitiesScreen
+import com.jesil.skycast.features.search.presentation.SearchCitiesViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherScreen
 import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.theme.SkyCastTheme
 import org.koin.androidx.compose.koinViewModel
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -45,6 +48,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SkyCastTheme {
                 val navController = rememberNavController()
+                val context = LocalContext.current
                 NavHost(
                     navController = navController,
                     startDestination = if (ContextCompat.checkSelfPermission(
@@ -92,6 +96,24 @@ class MainActivity : ComponentActivity() {
                             state = citiesState,
                             onActions = citiesViewModel::onAction,
                             selectedCities = selectedCities,
+                            navController = navController
+                        )
+                    }
+
+                    composable(Screens.SearchCitiesScreen.route) {
+                        val searchCitiesViewModel: SearchCitiesViewModel = koinViewModel()
+                        val searchState by searchCitiesViewModel.searchCitiesViewState.collectAsStateWithLifecycle()
+                        val searchKeyword by searchCitiesViewModel.searchKeyword.collectAsStateWithLifecycle()
+
+                        LaunchedEffect(searchCitiesViewModel.error){
+                            searchCitiesViewModel.error.collect{ err ->
+                                Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        SearchCitiesScreen(
+                            state = searchState,
+                            onActions = searchCitiesViewModel::onAction,
+                            searchKeyword = searchKeyword,
                             navController = navController
                         )
                     }

@@ -18,8 +18,6 @@ class WeatherApp: Application() {
             androidLogger()
             modules(
                 appModule,
-                /*locationModule,
-                dataStoreModule*/
             )
         }
     }

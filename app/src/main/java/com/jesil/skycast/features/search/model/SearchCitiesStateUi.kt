@@ -7,7 +7,6 @@ data class SearchCitiesStateUi(
 )
 
 sealed class SearchCitiesViewState{
-    object Loading: SearchCitiesViewState()
+    object EmptyState: SearchCitiesViewState()
     data class Success(val data: List<SearchCitiesStateUi>): SearchCitiesViewState()
-    data class Error(val message: String): SearchCitiesViewState()
 }
