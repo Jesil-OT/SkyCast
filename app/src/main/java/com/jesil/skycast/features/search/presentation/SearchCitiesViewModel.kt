@@ -59,30 +59,29 @@ class SearchCitiesViewModel(
             is SearchCitiesAction.SearchCity -> {
                 _searchKeyword.update { action.cityName }
             }
-            is SearchCitiesAction.Retry -> {
-
-            }
             is SearchCitiesAction.SelectCity -> {
 
             }
             is SearchCitiesAction.ClearCity -> {
                 _searchKeyword.update { "" }
             }
-            is SearchCitiesAction.RecordWithMic -> {
-
-            }
         }
     }
 
-    private fun searchCity(city: String) = viewModelScope.launch {
-        val response = searchWeatherRepository.searchCity(city)
-
-        response.onStart {
-            _searchCitiesViewState.update { SearchCitiesViewState.EmptyState }
-        }.catch { err ->
-            _error.emit(err.message.toString())
-        }.collect { data ->
-            _searchCitiesViewState.update { SearchCitiesViewState.Success(data.toSearchCitiesUI()) }
+    private fun searchCity(city: String) {
+        viewModelScope.launch {
+            searchWeatherRepository.searchCity(city)
+                .onStart {
+                    _searchCitiesViewState.update { SearchCitiesViewState.EmptyState }
+                }
+                .catch { err ->
+                    _error.emit(err.message.toString())
+                }
+                .collect { data ->
+                    _searchCitiesViewState.update {
+                        SearchCitiesViewState.Success(data.toSearchCitiesUI())
+                    }
+                }
         }
     }
 }
