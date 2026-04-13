@@ -14,6 +14,7 @@ import com.jesil.skycast.data.source.remote.SearchRemoteDataSource
 import com.jesil.skycast.data.source.remote.WeatherRemoteDataSource
 import com.jesil.skycast.features.cities.presentation.CitiesViewModel
 import com.jesil.skycast.features.location.presentation.LocationViewModel
+import com.jesil.skycast.features.search.presentation.SearchCitiesViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.util.HttpClientFactory
 import io.ktor.client.HttpClient
@@ -46,4 +47,6 @@ val appModule = module {
     viewModelOf(::LocationViewModel)
 
     viewModelOf(::CitiesViewModel)
+
+    viewModelOf(::SearchCitiesViewModel)
 }

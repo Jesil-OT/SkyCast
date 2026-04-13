@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jesil.skycast.ui.theme.SkyCastTheme
 
 @Composable
@@ -28,6 +29,7 @@ fun SearchBarDisplay(
     onClick: () -> Unit = {}
 ) {
     val boxColor = if (isSystemInDarkTheme()) Color.White else Color.Gray.copy(.5f)
+
     Box(
         modifier = modifier
             .clip(shape = RoundedCornerShape(20.dp))
@@ -46,6 +48,7 @@ fun SearchBarDisplay(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "Search for a location",
+                    fontSize = 13.sp,
                     color = Color.Black.copy(.5f)
                 )
             }
