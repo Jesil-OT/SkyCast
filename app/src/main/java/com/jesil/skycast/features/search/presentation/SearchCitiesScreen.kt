@@ -39,6 +39,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
+import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.search.model.SearchCitiesStateUi
 import com.jesil.skycast.features.search.model.SearchCitiesViewState
 import com.jesil.skycast.features.search.presentation.components.CityItem
@@ -93,7 +94,9 @@ fun SearchCitiesScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     SearchBar(
-                        modifier = Modifier.weight(1f).focusRequester(focusRequester),
+                        modifier = Modifier
+                            .weight(1f)
+                            .focusRequester(focusRequester),
                         textValue = searchKeyword,
                         onValueChange = { onActions(SearchCitiesAction.SearchCity(it)) },
                         onClearText = { onActions(SearchCitiesAction.ClearCity(searchKeyword)) },
@@ -111,8 +114,11 @@ fun SearchCitiesScreen(
                     )
                     Text(
                         text = stringResource(R.string.cancel),
-                        modifier = Modifier.clickable{ navController.navigateUp()
-                        }.padding(start = 10.dp),
+                        modifier = Modifier
+                            .clickable {
+                                navController.navigateUp()
+                            }
+                            .padding(start = 10.dp),
                         textDecoration = TextDecoration.Underline
                     )
                 }
@@ -135,7 +141,7 @@ fun SearchCitiesScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                         item = city,
                                         onItemClicked = { lat, long ->
-                                            onActions(SearchCitiesAction.SelectCity(lat, long))
+                                            navController.navigate("${Screens.SearchWeatherScreen.route}/$lat/$long")
                                         }
                                     )
                                 }
@@ -166,23 +172,23 @@ private fun SearchCitiesScreenPreview() {
 private val fakeSearchCitiesList = listOf(
     SearchCitiesStateUi(
         cityName = "Lagos, NG",
-        latitude = 6.45,
-        longitude = 9.68,
+        latitude = "6.45",
+        longitude = "9.68",
     ),
     SearchCitiesStateUi(
         cityName = "London, UK",
-        latitude = 51.50,
-        longitude = -0.12,
+        latitude = "51.50",
+        longitude = "-0.12",
     ),
     SearchCitiesStateUi(
         cityName = "Paris, FR",
-        latitude = 48.85,
-        longitude = 2.39,
+        latitude = "48.85",
+        longitude = "2.39",
     ),
     SearchCitiesStateUi(
         cityName = "New York, US",
-        latitude = 40.7,
-        longitude = -74.0,
+        latitude = "40.7",
+        longitude = "-74.0",
     )
 )
 

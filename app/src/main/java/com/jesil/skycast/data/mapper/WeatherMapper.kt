@@ -137,7 +137,7 @@ fun List<SearchCities>.toSearchCitiesUI(): List<SearchCitiesStateUi>{
 fun SearchCities.toSearchCitiesUI(): SearchCitiesStateUi {
     return SearchCitiesStateUi(
         cityName = "$placeName $state, $country",
-        latitude = latitude,
-        longitude = longitude
+        latitude = latitude.toString(),
+        longitude = longitude.toString()
     )
 }

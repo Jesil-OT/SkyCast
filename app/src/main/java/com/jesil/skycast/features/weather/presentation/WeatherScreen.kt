@@ -96,8 +96,8 @@ fun WeatherScreen(
 
 @Composable
 fun WeatherInnerScreen(
-    state: WeatherStateUi,
     modifier: Modifier = Modifier,
+    state: WeatherStateUi,
     navController: NavController
 ) {
     val backgroundColor = state.weatherTypeIcon.generateBackgroundColor()
@@ -133,7 +133,7 @@ fun WeatherInnerScreen(
                 .padding(innerPadding)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            val (location, weatherType, temperature, weatherTypeDescription, feelLike,
+          val (location, weatherType, temperature, weatherTypeDescription, feelLike,
                 hourlyWeather, dailyWeather, weatherInfo) = createRefs()
             val daysCount = state.dailyWeather.size.toString()
 

@@ -24,10 +24,12 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.cities.presentation.CitiesScreen
 import com.jesil.skycast.features.cities.presentation.CitiesViewModel
@@ -35,6 +37,8 @@ import com.jesil.skycast.features.location.presentation.LocationPermissionScreen
 import com.jesil.skycast.features.location.presentation.LocationViewModel
 import com.jesil.skycast.features.search.presentation.SearchCitiesScreen
 import com.jesil.skycast.features.search.presentation.SearchCitiesViewModel
+import com.jesil.skycast.features.search.presentation.SearchWeatherScreen
+import com.jesil.skycast.features.search.presentation.SearchWeatherViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherScreen
 import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.theme.SkyCastTheme
@@ -116,6 +120,24 @@ class MainActivity : ComponentActivity() {
                             searchKeyword = searchKeyword,
                             navController = navController
                         )
+                    }
+
+                    composable(
+                        route = "${Screens.SearchWeatherScreen.route}/{lat}/{long}",
+                        arguments = listOf(
+                            navArgument("lat") { type = NavType.StringType },
+                            navArgument("long") { type = NavType.StringType }
+                        )
+                    ) {
+                        val searchWeatherViewModel: SearchWeatherViewModel = koinViewModel()
+                        val searchWeatherState by searchWeatherViewModel.searchWeatherState.collectAsStateWithLifecycle()
+
+                        SearchWeatherScreen(
+                            state = searchWeatherState,
+                            onActions = searchWeatherViewModel::onAction,
+                            navController = navController
+                        )
+
                     }
                 }
             }

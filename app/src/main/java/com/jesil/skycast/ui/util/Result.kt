@@ -9,7 +9,7 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.SerializationException
-import kotlin.coroutines.coroutineContext
+import timber.log.Timber
 
 //typealias DomainError = Error
 interface Error
@@ -66,7 +66,8 @@ inline fun <reified T> safeApiCall(
         emit(Response.Error("NetworkError.SERIALIZATION_ERROR"))
     } catch (e: Exception) {
         currentCoroutineContext().ensureActive()
-        emit(Response.Error("NetworkError.UNKNOWN_ERROR"))
+        Timber.e("SafeApiCall, Unexpected error $e" )
+        emit(Response.Error(e.message ?: "NetworkError.UNKNOWN_ERROR"))
     }
 }
 
