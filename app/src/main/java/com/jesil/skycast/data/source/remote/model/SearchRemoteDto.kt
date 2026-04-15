@@ -12,5 +12,5 @@ data class SearchRemoteDto(
     @SerialName("lon")
     val longitude: Double,
     val country: String,
-    val state: String,
+    val state: String? = null,
 )

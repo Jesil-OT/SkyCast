@@ -18,7 +18,7 @@ import com.jesil.skycast.ui.theme.SkyCastTheme
 fun CityItem(
     modifier: Modifier = Modifier,
     item: SearchCitiesStateUi,
-    onItemClicked : (lat: Double, long: Double) -> Unit
+    onItemClicked : (lat: String, long: String) -> Unit
 ) {
     Box(
         modifier = modifier.clickable { onItemClicked(item.latitude, item.longitude) }
@@ -41,8 +41,8 @@ private fun CityItemPreview() {
             modifier = Modifier.fillMaxWidth(),
             item = SearchCitiesStateUi(
                 cityName = "Lagos, NG",
-                latitude = 6.45,
-                longitude = 9.68,
+                latitude = "6.45",
+                longitude = "9.68",
             ),
             onItemClicked = { _, _ -> }
         )

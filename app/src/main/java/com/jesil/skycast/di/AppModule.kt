@@ -1,5 +1,6 @@
 package com.jesil.skycast.di
 
+import androidx.lifecycle.SavedStateHandle
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.jesil.skycast.data.repository.current_weather.CurrentWeatherRepoImpl
@@ -15,12 +16,14 @@ import com.jesil.skycast.data.source.remote.WeatherRemoteDataSource
 import com.jesil.skycast.features.cities.presentation.CitiesViewModel
 import com.jesil.skycast.features.location.presentation.LocationViewModel
 import com.jesil.skycast.features.search.presentation.SearchCitiesViewModel
+import com.jesil.skycast.features.search.presentation.SearchWeatherViewModel
 import com.jesil.skycast.features.weather.presentation.WeatherViewModel
 import com.jesil.skycast.ui.util.HttpClientFactory
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -49,4 +52,11 @@ val appModule = module {
     viewModelOf(::CitiesViewModel)
 
     viewModelOf(::SearchCitiesViewModel)
+
+    viewModel { (handle: SavedStateHandle) ->
+        SearchWeatherViewModel(
+            currentWeatherRepository = get(),
+            savedStateHandle = handle
+        )
+    }
 }

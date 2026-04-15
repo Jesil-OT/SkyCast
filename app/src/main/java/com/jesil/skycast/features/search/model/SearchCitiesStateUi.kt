@@ -2,8 +2,8 @@ package com.jesil.skycast.features.search.model
 
 data class SearchCitiesStateUi(
     val cityName: String = "",
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
+    val latitude: String = "0.0",
+    val longitude: String = "0.0",
 )
 
 sealed class SearchCitiesViewState{

@@ -59,9 +59,6 @@ class SearchCitiesViewModel(
             is SearchCitiesAction.SearchCity -> {
                 _searchKeyword.update { action.cityName }
             }
-            is SearchCitiesAction.SelectCity -> {
-
-            }
             is SearchCitiesAction.ClearCity -> {
                 _searchKeyword.update { "" }
             }
