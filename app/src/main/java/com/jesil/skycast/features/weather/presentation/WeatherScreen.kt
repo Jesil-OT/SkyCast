@@ -133,12 +133,12 @@ fun WeatherInnerScreen(
                 .padding(innerPadding)
                 .verticalScroll(state = rememberScrollState())
         ) {
-          val (location, weatherType, temperature, weatherTypeDescription, feelLike,
+            val (location, weatherType, temperature, weatherTypeDescription, feelLike,
                 hourlyWeather, dailyWeather, weatherInfo) = createRefs()
             val daysCount = state.dailyWeather.size.toString()
 
             Location(
-               location = state.location,
+                location = state.location,
                 modifier = Modifier
                     .constrainAs(location) {
                         top.linkTo(parent.top, margin = 20.dp)
@@ -333,6 +333,7 @@ private fun WeatherScreenPreview() {
 
     }
 }
+
 internal val weatherUiState = WeatherStateUi(
     location = "Lagos, NG",
     temperature = "31°",

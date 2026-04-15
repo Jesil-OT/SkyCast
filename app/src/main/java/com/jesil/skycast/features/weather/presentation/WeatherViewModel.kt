@@ -35,8 +35,8 @@ class WeatherViewModel(
 //                latitude = currentLatLong?.latitude ?: 0.0,
 //                longitude = currentLatLong?.longitude ?: 0.0
             currentWeatherRepository.fetchCurrentWeather(
-                latitude = 33.44,
-                longitude = -94.04
+                latitude =/* 33.44,*/ currentLatLong?.latitude ?: 0.0,
+                longitude = /*-94.04*/ currentLatLong?.longitude ?: 0.0
             ).onStart {
                 _weatherViewState.update {  WeatherViewState.Loading }
             }.catch { err ->

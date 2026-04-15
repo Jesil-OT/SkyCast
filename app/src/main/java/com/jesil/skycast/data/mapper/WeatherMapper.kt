@@ -40,7 +40,7 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
         pressure = currentWeatherList[0].main.pressure,
         seaLevel = currentWeatherList[0].main.seaLevel,
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
-        visibility = currentWeatherList[0].visibility.convertMToKM(),
+        visibility = currentWeatherList[0].visibility?.convertMToKM(),
         hourlyWeather = currentWeatherList.map { it.toHoursWeather() }.take(9),
         dailyWeather = currentWeatherList.filterDailyEntries().map { it.toHoursWeather() }
     )

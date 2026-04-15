@@ -24,7 +24,7 @@ class SearchRemoteDataSource(
             urlString = Constants.BASE_URL + Constants.SEARCH_END_POINT
         ){
             parameter(Constants.CITY_NAME, cityName)
-            parameter(Constants.LIMIT, 20)
+            parameter(Constants.LIMIT, 10)
             parameter(APP_ID, BuildConfig.APP_ID)
         }
     }.flowOn(Dispatchers.IO)
