@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class City(
     @SerialName("coord")
-    val coordinates: Coord,
+    val coordinates: Coord? = null,
     val country: String,
     val id: Int,
     val name: String,
