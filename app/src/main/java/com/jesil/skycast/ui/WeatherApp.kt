@@ -1,4 +1,4 @@
-package com.jesil.skycast
+package com.jesil.skycast.ui
 
 import android.app.Application
 import com.jesil.skycast.di.appModule
@@ -16,9 +16,7 @@ class WeatherApp: Application() {
         startKoin{
             androidContext(this@WeatherApp)
             androidLogger()
-            modules(
-                appModule,
-            )
+            modules(appModule,)
         }
     }
 }

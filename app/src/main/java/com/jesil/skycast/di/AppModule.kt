@@ -1,14 +1,19 @@
 package com.jesil.skycast.di
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.room.Room
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.jesil.skycast.data.repository.cities.CitiesRepository
+import com.jesil.skycast.data.repository.cities.CitiesRepositoryImpl
 import com.jesil.skycast.data.repository.current_weather.CurrentWeatherRepoImpl
 import com.jesil.skycast.data.repository.current_weather.CurrentWeatherRepository
 import com.jesil.skycast.data.repository.search_cities.SearchWeatherRepository
 import com.jesil.skycast.data.repository.search_cities.SearchWeatherRepositoryImpl
 import com.jesil.skycast.data.source.data_store.LocalDataStore
 import com.jesil.skycast.data.source.data_store.LocalDataStoreImpl
+import com.jesil.skycast.data.source.local.CityWeatherDao
+import com.jesil.skycast.data.source.local.WeatherAppDatabase
 import com.jesil.skycast.data.source.location.DefaultLocationTracker
 import com.jesil.skycast.data.source.location.LocationTracker
 import com.jesil.skycast.data.source.remote.SearchRemoteDataSource
@@ -31,7 +36,17 @@ import org.koin.dsl.module
 val appModule = module {
     single<HttpClient> { HttpClientFactory.create(CIO.create())}
 
-    single<FusedLocationProviderClient> { LocationServices.getFusedLocationProviderClient(androidContext()) } //FusedLocationProviderClient
+    factory<WeatherAppDatabase> {
+        Room.databaseBuilder(
+            androidContext(),
+            WeatherAppDatabase::class.java,
+            "weather_db"
+        ).build()
+    }
+
+    single<CityWeatherDao>{ get<WeatherAppDatabase>().dao() }
+
+    single<FusedLocationProviderClient> { LocationServices.getFusedLocationProviderClient(androidContext()) }
 
     single { WeatherRemoteDataSource(get()) }
 
@@ -42,6 +57,8 @@ val appModule = module {
     singleOf(::CurrentWeatherRepoImpl) bind CurrentWeatherRepository::class
 
     singleOf(::SearchWeatherRepositoryImpl) bind SearchWeatherRepository::class
+
+    singleOf(::CitiesRepositoryImpl) bind CitiesRepository::class
 
     viewModelOf(::WeatherViewModel)
 
@@ -56,6 +73,7 @@ val appModule = module {
     viewModel { (handle: SavedStateHandle) ->
         SearchWeatherViewModel(
             currentWeatherRepository = get(),
+            searchWeatherRepository = get(),
             savedStateHandle = handle
         )
     }

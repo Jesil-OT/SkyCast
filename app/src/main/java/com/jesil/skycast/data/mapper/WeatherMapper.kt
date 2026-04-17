@@ -1,6 +1,6 @@
 package com.jesil.skycast.data.mapper
 
-import com.jesil.skycast.data.model.CurrentDailyWeather
+import com.jesil.skycast.data.model.CurrentWeather
 import com.jesil.skycast.data.model.SearchCities
 import com.jesil.skycast.data.source.remote.model.SearchRemoteDto
 import com.jesil.skycast.data.source.remote.model.SingleWeather
@@ -23,8 +23,8 @@ import com.jesil.skycast.ui.util.formatUnixTime
 import com.jesil.skycast.ui.util.formatUnixTimeSimple
 import java.time.Instant
 
-fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
-    return CurrentDailyWeather(
+fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentWeather {
+    return CurrentWeather(
         id = city.id,
         location = city.name,
         country = city.country,
@@ -35,8 +35,8 @@ fun WeatherListRemoteDto.toCurrentDailyWeather(): CurrentDailyWeather {
         windSpeed = currentWeatherList[0].wind.speed.convertMsToKhm(),
         humidity = currentWeatherList[0].main.humidity,
         timeZone = Instant.ofEpochSecond(currentWeatherList[0].date.toLong()),
-        sunrise = Instant.ofEpochSecond(city.sunrise.toLong()),
-        sunset = Instant.ofEpochSecond(city.sunset.toLong()),
+        sunrise = Instant.ofEpochSecond(city.sunrise.toString().toLong()),
+        sunset = Instant.ofEpochSecond(city.sunset.toString().toLong()),
         pressure = currentWeatherList[0].main.pressure,
         seaLevel = currentWeatherList[0].main.seaLevel,
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
@@ -68,8 +68,8 @@ fun SearchRemoteDto.toSearchCities(): SearchCities {
     )
 }
 
-fun SingleWeather.toHoursWeather(): CurrentDailyWeather {
-    return CurrentDailyWeather(
+fun SingleWeather.toHoursWeather(): CurrentWeather {
+    return CurrentWeather(
         id = 0,
         location = "",
         country = "",
@@ -88,8 +88,9 @@ fun SingleWeather.toHoursWeather(): CurrentDailyWeather {
     )
 }
 
-fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherStateUi {
+fun CurrentWeather.toCurrentWeatherUI(): WeatherStateUi {
     return WeatherStateUi(
+        id = id,
         location = "$location, $country",
         time = timeZone.formatTimestamp(),
         temperature = temperature.toString() + TEMP_CELSIUS,
@@ -111,7 +112,7 @@ fun CurrentDailyWeather.toCurrentWeatherUI(): WeatherStateUi {
     )
 }
 
-fun CurrentDailyWeather.toHoursWeatherUI(): HoursWeatherStateUi {
+fun CurrentWeather.toHoursWeatherUI(): HoursWeatherStateUi {
     return HoursWeatherStateUi(
         time = timeZone.formatUnixTimeSimple(),
         weatherTypeIcon = weatherTypeIcon,
@@ -120,7 +121,7 @@ fun CurrentDailyWeather.toHoursWeatherUI(): HoursWeatherStateUi {
     )
 }
 
-fun CurrentDailyWeather.toDailyWeatherUI(): DailyWeatherStateUi {
+fun CurrentWeather.toDailyWeatherUI(): DailyWeatherStateUi {
 //    val currentTime = if (timeZone == Instant.now()) "Today" else timeZone.formatUnixDay()
     return DailyWeatherStateUi(
         day = timeZone.formatUnixDay(),

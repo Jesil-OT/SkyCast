@@ -145,9 +145,9 @@ fun CitiesScreen(
                                     ) {city ->
                                         WeatherCityItem(
                                             item = city,
-                                            isSelected = selectedCities.contains(city.id),
+                                            isSelected = selectedCities.contains(city.id.toString()),
                                             onClick = { lat, lon -> onActions(CitiesAction.NavigateTo(lat, lon)) },
-                                            onLongPress = { isPressed-> onActions(CitiesAction.OnLongPress(city.id, isPressed)) }
+                                            onLongPress = { isPressed-> onActions(CitiesAction.OnLongPress(city.id.toString(), isPressed)) }
                                         )
                                     }
                                 }
@@ -176,6 +176,7 @@ private fun CitiesScreenPreview() {
 
 internal val fakeWeatherList = listOf<CityModel>(
     CityModel(
+        id = 0,
         location = "Lagos, NG",
         lat = 6.45,
         lon = 9.68,
@@ -185,6 +186,7 @@ internal val fakeWeatherList = listOf<CityModel>(
         weatherType = "Clear sky"
     ),
     CityModel(
+        id = 1,
         location = "London, UK",
         lat = 51.50,
         lon = -0.12,
@@ -194,6 +196,7 @@ internal val fakeWeatherList = listOf<CityModel>(
         weatherType = "Clouds"
     ),
     CityModel(
+        id = 2,
         location = "Paris, FR",
         lat = 48.85,
         lon = 2.39,
@@ -203,6 +206,7 @@ internal val fakeWeatherList = listOf<CityModel>(
         weatherType = "Scattered clouds"
     ),
     CityModel(
+        id = 3,
         location = "New York, US",
         lat = 40.7,
         lon = -74.0,
