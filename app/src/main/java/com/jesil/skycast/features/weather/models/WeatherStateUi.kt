@@ -2,6 +2,7 @@ package com.jesil.skycast.features.weather.models
 
 
 data class WeatherStateUi(
+    val id: Int = 0,
     val location: String = "",
     val time: String = "",
     val temperature: String = "0.0°C",

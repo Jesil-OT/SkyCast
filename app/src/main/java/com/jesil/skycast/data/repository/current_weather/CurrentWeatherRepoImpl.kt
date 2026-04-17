@@ -1,7 +1,7 @@
 package com.jesil.skycast.data.repository.current_weather
 
 import com.jesil.skycast.data.mapper.toCurrentDailyWeather
-import com.jesil.skycast.data.model.CurrentDailyWeather
+import com.jesil.skycast.data.model.CurrentWeather
 import com.jesil.skycast.data.source.remote.WeatherRemoteDataSource
 import com.jesil.skycast.data.source.remote.model.WeatherListRemoteDto
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ class CurrentWeatherRepoImpl(
     override suspend fun fetchCurrentWeather(
         latitude: Double,
         longitude: Double
-    ): Flow<CurrentDailyWeather> {
+    ): Flow<CurrentWeather> {
         val currentWeather: Flow<WeatherListRemoteDto> = weatherRemoteDataSource.fetchCurrentWeather(
             latitude = latitude,
             longitude = longitude

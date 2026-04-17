@@ -1,8 +1,9 @@
 package com.jesil.skycast.data.model
 
+import com.jesil.skycast.data.source.local.model.CityWeatherEntity
 import java.time.Instant
 
-data class CurrentDailyWeather(
+data class CurrentWeather(
     val id: Int = 0,
     val location: String = "",
     val country: String = "",
@@ -19,9 +20,6 @@ data class CurrentDailyWeather(
     val visibility: Int? = 0,
     val seaLevel : Int = 0,
     val minTemperature: Int = 0,
-    val hourlyWeather: List<CurrentDailyWeather> = emptyList(),
-    val dailyWeather: List<CurrentDailyWeather> = emptyList()
+    val hourlyWeather: List<CurrentWeather> = emptyList(),
+    val dailyWeather: List<CurrentWeather> = emptyList()
 )
-
-
-

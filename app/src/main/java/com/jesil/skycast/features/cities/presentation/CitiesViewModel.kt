@@ -1,21 +1,36 @@
 package com.jesil.skycast.features.cities.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.jesil.skycast.data.mapper.toCityModel
+import com.jesil.skycast.data.model.CurrentWeather
+import com.jesil.skycast.data.repository.cities.CitiesRepository
 import com.jesil.skycast.features.cities.models.CityModel
 import com.jesil.skycast.features.cities.presentation.events.CitiesAction
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.collections.emptyList
 
-class CitiesViewModel: ViewModel() {
+class CitiesViewModel(
+    private val citiesRepository: CitiesRepository
+): ViewModel() {
 
-    private val _state = MutableStateFlow(fakeWeatherList)
+    private val _state = MutableStateFlow<List<CityModel>>(emptyList())
     val state = _state.asStateFlow()
 
     private val _selectedCities = MutableStateFlow<Set<String>>(emptySet())
     val selectedCities: StateFlow<Set<String>> = _selectedCities
+
+    init {
+        viewModelScope.launch {
+            citiesRepository.getAllCities().collect{ cities ->
+                _state.update { cities.map { it.toCityModel() } }
+            }
+        }
+    }
 
     fun onAction(action: CitiesAction){
         when(action){
