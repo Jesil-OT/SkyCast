@@ -54,7 +54,6 @@ private fun CityWeatherEntity.toCurrentWeatherSingle(): CurrentWeather {
 }
 
 fun WeatherStateUi.fromCurrentWeatherUI(): CurrentWeather {
-    val value = " km/h"
     return CurrentWeather(
         id = id,
         location = location,
@@ -63,7 +62,7 @@ fun WeatherStateUi.fromCurrentWeatherUI(): CurrentWeather {
         weatherType = weatherType,
         weatherTypeDescription = weatherTypeDescription,
         weatherTypeIcon = weatherTypeIcon,
-        windSpeed = windSpeed.removeSuffix(value).toInt(),
+        windSpeed = windSpeed.removeSuffix(" km/h").toInt(),
         humidity = humidity.trim { c -> c == '%' }.toInt(),
         sunrise = Instant.now(),
         sunset = Instant.now(),
