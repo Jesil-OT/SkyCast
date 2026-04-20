@@ -21,7 +21,7 @@
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125941.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130033.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130240.png" width="200" align="left"/>
-<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130305.png" width="200" align="left"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130305.png" width="200"/>
 
 ---
 
@@ -35,7 +35,7 @@ This project serves as a showcase of modern Android development best practices:
 * **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose)
 * **Networking**: [Retrofit](https://square.github.io/retrofit/) & [OkHttp](https://square.github.io/okhttp/)
 * **Local Database**: [Room Persistence Library](https://developer.android.com/training/data-storage/room)
-* **Concurrency**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html)
+* **Concurrency**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs flow.html)
 * **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 * **Data Source**: [OpenWeather API](https://openweathermap.org/api)
 
