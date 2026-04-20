@@ -15,4 +15,8 @@ class CitiesRepositoryImpl(
         val allCities: Flow<List<CityWeatherEntity>> = searchLocalDataSource.getAllCitiesWeather()
         return allCities.map { it.toCurrentWeather() }
     }
+
+    override suspend fun deleteCity(ids: List<Int>) =
+        searchLocalDataSource.deleteItemsByIds(ids)
+
 }
