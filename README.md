@@ -13,6 +13,20 @@
 
 ---
 
+## 📸 Screenshots
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125746.png" width="250"/> 
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125808.png" width="250"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125824.png" width="250"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125848.png" width="250"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125941.png" width="250"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130033.png" width="250"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130240.png" width="250"/>
+<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130305.png" width="250"/>
+
+
+
+# Author
+
 ## 🚀 Technical Stack
 
 This project serves as a showcase of modern Android development best practices:
