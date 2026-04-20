@@ -19,11 +19,8 @@ interface CityWeatherDao {
     @Upsert
     suspend fun insertCityWeather(cityWeatherEntity: CityWeatherEntity)
 
-    @Query("DELETE FROM cities_weather_table WHERE id = :id")
-    suspend fun deleteCityWeather(id: Int)
-
-    @Query("DELETE FROM cities_weather_table")
-    suspend fun deleteAllCitiesWeather()
+    @Query("DELETE FROM cities_weather_table WHERE id IN (:idList)")
+    suspend fun deleteItemsByIds(idList: List<Int>)
 
     @Update
     suspend fun updateCityWeather(cityWeatherEntity: CityWeatherEntity)

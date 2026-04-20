@@ -2,6 +2,12 @@ package com.jesil.skycast.features.cities.presentation
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -76,6 +82,9 @@ fun CitiesScreen(
                         contentAlignment = Alignment.Center,
                         content = {
                             Column(
+                                modifier = Modifier.clickable(
+                                    onClick = { onActions(CitiesAction.DeleteCity) }
+                                ),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center,
                                 content = {
@@ -119,6 +128,10 @@ fun CitiesScreen(
                 )
                 AnimatedContent(
                     targetState = state.isEmpty(),
+                    transitionSpec = {
+                        (fadeIn(animationSpec = tween(500)) + scaleIn(initialScale = 0.92f))
+                            .togetherWith(fadeOut(animationSpec = tween(400)))
+                    },
                     content = { noCities ->
                         if (noCities) {
                             Box(

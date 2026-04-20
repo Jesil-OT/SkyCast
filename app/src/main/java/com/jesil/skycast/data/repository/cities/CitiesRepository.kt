@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface CitiesRepository {
     fun getAllCities(): Flow<List<CurrentWeather>>
+
+    suspend fun deleteCity(ids: List<Int>)
 }

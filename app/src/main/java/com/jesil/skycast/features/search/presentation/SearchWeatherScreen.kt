@@ -3,6 +3,11 @@ package com.jesil.skycast.features.search.presentation
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -89,6 +94,10 @@ fun SearchWeatherScreen(
         content = { paddingValues ->
             AnimatedContent(
                 targetState = state,
+                transitionSpec = {
+                    (fadeIn(animationSpec = tween(500)) + scaleIn(initialScale = 0.92f))
+                        .togetherWith(fadeOut(animationSpec = tween(400)))
+                },
                 label = "search_weather_state"
             ) {
                 when(it){
