@@ -10,7 +10,7 @@
 * **🏙️ Global City Tracking**: Search and save an unlimited number of cities. Monitor weather for your next travel destination or check in on family across the globe.
 * **🔄 Instant Synchronization**: Powered by the **OpenWeather API**, providing live data updates at your fingertips.
 * **🎨 Modern Interface**: A clean, ad-free UI built entirely with **Jetpack Compose** for a smooth and fluid experience.
-
+  
 ---
 
 ## 📸 Screenshots
@@ -22,7 +22,6 @@
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130033.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130240.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130305.png" width="200" align="left"/>
-
 
 ---
 
