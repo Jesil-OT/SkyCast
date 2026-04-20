@@ -9,7 +9,7 @@
 * **📍 Real-Time Local Weather**: Automatically detects your current location to provide hyper-local temperature, humidity, and atmospheric conditions.
 * **🏙️ Global City Tracking**: Search and save an unlimited number of cities. Monitor weather for your next travel destination or check in on family across the globe.
 * **🔄 Instant Synchronization**: Powered by the **OpenWeather API**, providing live data updates at your fingertips.
-* **🎨 Modern Interface**: A clean, ad-free UI built entirely with **Jetpack Compose** for a smooth and fluid experience.
+* **🎨 Modern Interface**: A clean UI built entirely with **Jetpack Compose** for a smooth and fluid experience.
   
 ---
 
