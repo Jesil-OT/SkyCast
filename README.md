@@ -31,7 +31,7 @@ This project serves as a showcase of modern Android development best practices:
 
 1. **Clone the repository**:
    ```bash
-   git clone [https://github.com/yourusername/skycast.git](https://github.com/Jesil-OT/Skycast.git)
+   git clone [https://github.com/Jesil-OT/Skycast.git](https://github.com/Jesil-OT/Skycast.git)
 
 2. **Get an API Key**:
    * Visit [OpenWeatherMap](https://openweathermap.org/).
