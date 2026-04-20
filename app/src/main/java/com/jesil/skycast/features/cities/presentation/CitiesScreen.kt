@@ -157,6 +157,7 @@ fun CitiesScreen(
                                         key = { it.id }
                                     ) {city ->
                                         WeatherCityItem(
+                                            modifier = Modifier.animateItem(),
                                             item = city,
                                             isSelected = selectedCities.contains(city.id.toString()),
                                             onClick = { lat, lon -> onActions(CitiesAction.NavigateTo(lat, lon)) },
