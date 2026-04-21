@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -20,6 +21,8 @@ import androidx.navigation.navArgument
 import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.cities.presentation.CitiesScreen
 import com.jesil.skycast.features.cities.presentation.CitiesViewModel
+import com.jesil.skycast.features.cities.presentation.CitiesWeatherScreen
+import com.jesil.skycast.features.cities.presentation.CitiesWeatherViewModel
 import com.jesil.skycast.features.location.presentation.LocationPermissionScreen
 import com.jesil.skycast.features.search.presentation.SearchCitiesScreen
 import com.jesil.skycast.features.search.presentation.SearchCitiesViewModel
@@ -41,18 +44,7 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 NavHost(
                     navController = navController,
-                    startDestination = if (ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        Screens.WeatherScreen.route
-                    } else {
-                        Screens.LocationScreen.route
-                    }
+                    startDestination = resolveDestination()
                 ) {
                     composable(Screens.LocationScreen.route) {
                         LocationPermissionScreen(
@@ -125,8 +117,37 @@ class MainActivity : ComponentActivity() {
                         )
 
                     }
+
+                    composable(
+                        route = "${Screens.CitiesWeatherScreen.route}/{id}",
+                        arguments = listOf(
+                            navArgument("id") { type = NavType.IntType }
+                        )
+                    ) {
+                        val citiesWeatherViewModel: CitiesWeatherViewModel = koinViewModel()
+                        val citiesWeatherState by citiesWeatherViewModel.cityWeather.collectAsStateWithLifecycle()
+
+                        CitiesWeatherScreen(
+                            state = citiesWeatherState,
+                        )
+
+                    }
                 }
             }
         }
+    }
+
+    @Composable
+    private fun resolveDestination(): String = if (ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    ) {
+        Screens.WeatherScreen.route
+    } else {
+        Screens.LocationScreen.route
     }
 }

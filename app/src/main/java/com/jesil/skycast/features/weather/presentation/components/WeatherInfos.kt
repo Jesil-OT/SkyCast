@@ -20,6 +20,8 @@ import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.ui.theme.RainyBlue2
 import com.jesil.skycast.ui.theme.SkyCastTheme
 import com.jesil.skycast.ui.util.Constants.TEMP_C
+import com.jesil.skycast.ui.util.formatUnixTime
+import java.time.Instant
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -36,14 +38,14 @@ fun WeatherInfos(
         WeatherInfoItem(
             modifier = Modifier.weight(1f),
             title = stringResource(R.string.sunrise),
-            value = data.sunrise,
+            value = data.sunrise.formatUnixTime(),
             iconRes = ImageVector.vectorResource(R.drawable.ic_sunrise),
         )
 
         WeatherInfoItem(
             modifier = Modifier.weight(1f),
             title = stringResource(R.string.sunset),
-            value = data.sunset,
+            value = data.sunset.formatUnixTime(),
             iconRes = ImageVector.vectorResource(R.drawable.ic_sunrise),
         )
 
@@ -101,8 +103,8 @@ private fun WeatherInfosPreview() {
         WeatherInfos(
             modifier = Modifier.background(RainyBlue2),
             data = WeatherStateUi(
-                sunrise = "3:55 am",
-                sunset = "7:00 pm",
+                sunrise = Instant.now(),
+                sunset = Instant.now(),
                 humidity = "80%",
                 windSpeed = "11 km/h",
                 pressure = "1009 hpa",

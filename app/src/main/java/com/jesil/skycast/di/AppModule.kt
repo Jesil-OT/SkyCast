@@ -19,6 +19,7 @@ import com.jesil.skycast.data.source.location.LocationTracker
 import com.jesil.skycast.data.source.remote.SearchRemoteDataSource
 import com.jesil.skycast.data.source.remote.WeatherRemoteDataSource
 import com.jesil.skycast.features.cities.presentation.CitiesViewModel
+import com.jesil.skycast.features.cities.presentation.CitiesWeatherViewModel
 import com.jesil.skycast.features.location.presentation.LocationViewModel
 import com.jesil.skycast.features.search.presentation.SearchCitiesViewModel
 import com.jesil.skycast.features.search.presentation.SearchWeatherViewModel
@@ -74,6 +75,13 @@ val appModule = module {
         SearchWeatherViewModel(
             currentWeatherRepository = get(),
             searchWeatherRepository = get(),
+            savedStateHandle = handle
+        )
+    }
+
+    viewModel { (handle: SavedStateHandle) ->
+        CitiesWeatherViewModel(
+            citiesWeatherRepository = get(),
             savedStateHandle = handle
         )
     }

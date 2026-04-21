@@ -22,6 +22,8 @@ data class CityWeatherEntity(
     val sunrise: Int,
     val sunset: Int,
     val pressure: Int,
+    val visibility: Int?,
+    val seaLevel: Int,
     @ColumnInfo(name = "min_temperature") val minTemperature: Int,
     @ColumnInfo(name = "time_zone") val timeZone: Int,
 //    @ColumnInfo(name = "hourly_weather") val hourlyWeather: List<CityWeatherEntity> = emptyList(),

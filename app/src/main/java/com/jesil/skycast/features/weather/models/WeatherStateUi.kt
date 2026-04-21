@@ -1,5 +1,7 @@
 package com.jesil.skycast.features.weather.models
 
+import java.time.Instant
+
 
 data class WeatherStateUi(
     val id: Int = 0,
@@ -13,8 +15,8 @@ data class WeatherStateUi(
     val humidity: String = "",
     val rainChance: String = "",
     val timeZone: String = "",
-    val sunrise: String = "",
-    val sunset: String = "",
+    val sunrise: Instant = Instant.now(),
+    val sunset: Instant = Instant.now(),
     val pressure: String = "",
     val minTemperature: String = "",
     val visibility: String = "",

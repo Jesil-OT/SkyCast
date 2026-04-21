@@ -23,5 +23,7 @@ sealed class Screens(
     data object SearchCitiesScreen : Screens(route = "search_cities_screen")
     @Serializable
     data object SearchWeatherScreen : Screens(route = "search_weather_screen")
+    @Serializable
+    data object CitiesWeatherScreen : Screens(route = "cities_weather_screen")
 
 }
