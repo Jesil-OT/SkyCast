@@ -21,7 +21,6 @@
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260421_102830_new_04.png" width ="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125824.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125848.png" width="200" align="left"/>
-<img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_125941.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260420_130033.png" width="200" align="left"/>
 <img src = "https://github.com/Jesil-OT/SkyCast/blob/cities_feature/screenshots/Screenshot_20260421_102803_new_03.png" width ="200"/>
 
