@@ -78,7 +78,7 @@ fun CitiesScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 30.dp),
+                            .padding(bottom = 70.dp),
                         contentAlignment = Alignment.Center,
                         content = {
                             Column(
