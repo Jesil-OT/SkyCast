@@ -1,4 +1,4 @@
-package com.jesil.skycast.features.weather.presentation
+package com.jesil.skycast.features.cities.presentation
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -20,10 +20,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -37,69 +35,26 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.jesil.skycast.R
 import com.jesil.skycast.core.navigation.Screens
 import com.jesil.skycast.features.weather.models.WeatherStateUi
-import com.jesil.skycast.features.weather.models.WeatherViewState
 import com.jesil.skycast.features.weather.presentation.components.DailyWeatherItem
-import com.jesil.skycast.features.weather.presentation.components.ErrorScreen
 import com.jesil.skycast.features.weather.presentation.components.HoursWeatherItem
 import com.jesil.skycast.features.weather.presentation.components.LazyListHeader
-import com.jesil.skycast.features.weather.presentation.components.LoadingScreen
 import com.jesil.skycast.features.weather.presentation.components.Location
 import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
 import com.jesil.skycast.features.weather.presentation.components.WeatherInfos
-import com.jesil.skycast.features.weather.presentation.events.WeatherAction
-import com.jesil.skycast.ui.theme.SkyCastTheme
 import com.jesil.skycast.ui.util.generateBackgroundColor
 import com.jesil.skycast.ui.util.generateIcon
-import org.koin.androidx.compose.koinViewModel
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import timber.log.Timber
-import java.time.Instant
 
 @Composable
-fun WeatherScreen(
-    state: WeatherViewState,
-    onActions: (WeatherAction) -> Unit,
-    navController: NavController
-) {
-    Timber.d("WeatherScreen!!!!!: The state is $state")
-    when (state) {
-        is WeatherViewState.Error -> {
-            ErrorScreen(
-                message = state.message,
-                onRetryClick = { onActions(WeatherAction.Retry) }
-            )
-        }
-
-        is WeatherViewState.Loading -> {
-            LoadingScreen(modifier = Modifier.fillMaxSize())
-        }
-
-        is WeatherViewState.Success -> {
-            WeatherInnerScreen(
-                state = state.data,
-                navController = navController
-            )
-        }
-    }
-}
-
-@Composable
-fun WeatherInnerScreen(
-    modifier: Modifier = Modifier,
+fun CitiesWeatherScreen(
     state: WeatherStateUi,
-    navController: NavController
 ) {
     val backgroundColor = state.weatherTypeIcon.generateBackgroundColor()
     val backgroundColorStateTop by animateColorAsState(
@@ -111,17 +66,9 @@ fun WeatherInnerScreen(
         label = "background_color_bottom"
     )
 
-    Scaffold(
-        topBar = {
-            LocationTopBar(
-                modifier = Modifier.padding(top = 30.dp),
-                date = state.time,
-                onNavigationClick = { navController.navigate(Screens.CitiesScreen.route) }
-            )
-        }
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         ConstraintLayout(
-            modifier = modifier
+            modifier = Modifier
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
@@ -318,39 +265,3 @@ fun WeatherInnerScreen(
         }
     }
 }
-
-
-@Preview
-@Composable
-private fun WeatherScreenPreview() {
-    SkyCastTheme {
-        WeatherScreen(
-            state = WeatherViewState.Success(
-                data = weatherUiState
-            ),
-            onActions = {},
-            navController = rememberNavController()
-        )
-
-    }
-}
-
-internal val weatherUiState = WeatherStateUi(
-    location = "Lagos, NG",
-    temperature = "31°",
-    weatherType = "Clear sky",
-    weatherTypeDescription = "clear sky",
-    weatherTypeIcon = "01n",
-    windSpeed = "11 km/h",
-    humidity = "94%",
-    rainChance = "0.13",
-    timeZone = "West Africa Time",
-    time = "Mon, July 6",
-    sunrise = Instant.now(),
-    sunset = Instant.now(),
-    pressure = "1009 hpa",
-    minTemperature = "29°C",
-)
-
-//sunrise = "3:55 am",
-//sunset = "7:00 pm",

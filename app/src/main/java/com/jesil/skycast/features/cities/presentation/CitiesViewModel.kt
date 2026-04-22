@@ -39,9 +39,6 @@ class CitiesViewModel(
     }
     fun onAction(action: CitiesAction){
         when(action){
-            is CitiesAction.NavigateTo -> {
-
-            }
             is CitiesAction.OnLongPress -> {
               _selectedCities.update { city ->
                   if(action.isPressed) city.add(action.id) else city.remove(action.id)

@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun WeatherCityItem(
     modifier: Modifier = Modifier,
     item: CityModel,
     isSelected: Boolean,
-    onClick: (lat: Double, lon: Double) -> Unit = {_,_ ->},
+    onClick: (id: Int) -> Unit,
     onLongPress: (state: Boolean) -> Unit = {}
 ) {
     val backgroundColor = item.weatherTypeIcon.generateBackgroundColor()
@@ -64,7 +65,7 @@ fun WeatherCityItem(
                 )
             )
             .combinedClickable(
-                onClick = { onClick(0.0, 0.0) },
+                onClick = { onClick(item.id) },
                 onLongClick = { onLongPress(!isSelected) }
             ),
         content = {
@@ -88,8 +89,14 @@ fun WeatherCityItem(
                     Column(
                         modifier = Modifier.padding(start = 10.dp),
                         content = {
-                            Location(
-                                location =  item.location,
+                            Text(
+                                modifier = Modifier.fillMaxWidth(.5f),
+                                text = item.location,
+                                color = Color.White,
+                                fontSize = 17.sp,
+                                maxLines = 1,
+                                softWrap = true,
+                                overflow = TextOverflow.Ellipsis
                             )
                             Spacer(modifier = Modifier.height(3.dp))
                             MinTempItem(
@@ -148,27 +155,6 @@ private fun MinTempItem(
     )
 }
 
-@Composable
-private fun Location(location: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        content = {
-            Text(
-                text = location,
-                color = Color.White,
-                fontSize = 17.sp
-            )
-            Spacer(modifier = Modifier.width(5.dp))
-            Icon(
-                modifier = Modifier.size(20.dp),
-                imageVector = Icons.Default.LocationOn,
-                contentDescription = location,
-                tint = Color.White,
-            )
-        }
-    )
-}
-
 @Preview
 @Composable
 private fun WeatherCityItemPreview() {
@@ -176,9 +162,9 @@ private fun WeatherCityItemPreview() {
         WeatherCityItem(
             modifier = Modifier.fillMaxWidth(),
             item = fakeWeatherList[0],
-            onClick = {_,_ ->},
+            onClick = {},
             onLongPress = {},
-            isSelected = false
+            isSelected = true
         )
     }
 }

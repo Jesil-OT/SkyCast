@@ -78,7 +78,7 @@ fun CitiesScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 30.dp),
+                            .padding(bottom = 70.dp),
                         contentAlignment = Alignment.Center,
                         content = {
                             Column(
@@ -160,7 +160,7 @@ fun CitiesScreen(
                                             modifier = Modifier.animateItem(),
                                             item = city,
                                             isSelected = selectedCities.contains(city.id.toString()),
-                                            onClick = { lat, lon -> onActions(CitiesAction.NavigateTo(lat, lon)) },
+                                            onClick = { id -> navController.navigate(Screens.CitiesWeatherScreen.route + "/$id") },
                                             onLongPress = { isPressed-> onActions(CitiesAction.OnLongPress(city.id.toString(), isPressed)) }
                                         )
                                     }
