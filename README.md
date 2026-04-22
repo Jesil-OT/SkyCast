@@ -36,7 +36,7 @@ This project serves as a showcase of modern Android development best practices:
 * **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose)
 * **Networking**: [Retrofit](https://square.github.io/retrofit/) & [OkHttp](https://square.github.io/okhttp/)
 * **Local Database**: [Room Persistence Library](https://developer.android.com/training/data-storage/room)
-* **Concurrency**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs flow.html)
+* **Concurrency**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docsflow.html)
 * **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 * **Data Source**: [OpenWeather API](https://openweathermap.org/api)
 
