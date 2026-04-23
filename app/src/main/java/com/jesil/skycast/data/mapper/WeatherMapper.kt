@@ -2,6 +2,9 @@ package com.jesil.skycast.data.mapper
 
 import com.jesil.skycast.data.model.CurrentWeather
 import com.jesil.skycast.data.model.SearchCities
+import com.jesil.skycast.data.source.local.model.CityWeatherEntity
+import com.jesil.skycast.data.source.local.model.DailyWeatherEntity
+import com.jesil.skycast.data.source.local.model.HourlyWeatherEntity
 import com.jesil.skycast.data.source.remote.model.SearchRemoteDto
 import com.jesil.skycast.data.source.remote.model.SingleWeather
 import com.jesil.skycast.data.source.remote.model.WeatherListRemoteDto
@@ -100,7 +103,7 @@ fun CurrentWeather.toCurrentWeatherUI(): WeatherStateUi {
         windSpeed = windSpeed.toString() + WIND_SPEED,
         humidity = humidity.toString() + HUMIDITY,
         rainChance = "0%",
-        timeZone = timeZone.formatTimestamp(),
+        timeZone = timeZone,
         sunrise = sunrise,
         sunset = sunset,
         pressure = pressure.toString() + PRESSURE,
@@ -114,7 +117,7 @@ fun CurrentWeather.toCurrentWeatherUI(): WeatherStateUi {
 
 fun CurrentWeather.toHoursWeatherUI(): HoursWeatherStateUi {
     return HoursWeatherStateUi(
-        time = timeZone.formatUnixTimeSimple(),
+        time = timeZone,
         weatherTypeIcon = weatherTypeIcon,
         temperature = temperature.toString() + TEMP_CELSIUS,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS
@@ -124,7 +127,7 @@ fun CurrentWeather.toHoursWeatherUI(): HoursWeatherStateUi {
 fun CurrentWeather.toDailyWeatherUI(): DailyWeatherStateUi {
 //    val currentTime = if (timeZone == Instant.now()) "Today" else timeZone.formatUnixDay()
     return DailyWeatherStateUi(
-        day = timeZone.formatUnixDay(),
+        day = timeZone,
         weatherTypeIcon = weatherTypeIcon,
         temperature = temperature.toString() + TEMP_CELSIUS,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS
@@ -133,6 +136,47 @@ fun CurrentWeather.toDailyWeatherUI(): DailyWeatherStateUi {
 
 fun List<SearchCities>.toSearchCitiesUI(): List<SearchCitiesStateUi>{
     return this.map { it.toSearchCitiesUI() }
+}
+
+fun WeatherListRemoteDto.toCurrentWeatherEntity(): CityWeatherEntity {
+    return CityWeatherEntity(
+        id = city.id,
+        location = city.name,
+        country = city.country,
+        temperature = currentWeatherList[0].main.temperature.convertToCelsius(),
+        weatherType = currentWeatherList[0].weather[0].main,
+        weatherTypeDescription = currentWeatherList[0].weather[0].description,
+        weatherTypeIcon = currentWeatherList[0].weather[0].icon,
+        windSpeed = currentWeatherList[0].wind.speed.convertMsToKhm(),
+        humidity = currentWeatherList[0].main.humidity,
+        timeZone = currentWeatherList[0].date,
+        sunrise = city.sunrise,
+        sunset = city.sunset,
+        pressure = currentWeatherList[0].main.pressure,
+        seaLevel = currentWeatherList[0].main.seaLevel,
+        minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
+        visibility = currentWeatherList[0].visibility?.convertMToKM(),
+        hourlyWeather = currentWeatherList.map { it.toHourlyWeatherEntity() }.take(9),
+        dailyWeather = currentWeatherList.filterDailyEntries().map { it.toDailyWeatherEntity() }
+    )
+}
+
+private fun SingleWeather.toHourlyWeatherEntity(): HourlyWeatherEntity  {
+    return HourlyWeatherEntity(
+        time = date,
+        weatherTypeIcon = weather[0].icon,
+        temperature = main.temperature.convertToCelsius(),
+        minTemperature = main.feelsLikeTemperature.convertToCelsius()
+    )
+}
+
+private fun SingleWeather.toDailyWeatherEntity(): DailyWeatherEntity {
+    return DailyWeatherEntity(
+        day = date,
+        weatherTypeIcon = weather[0].icon,
+        temperature = main.temperature.convertToCelsius(),
+        minTemperature = main.feelsLikeTemperature.convertToCelsius()
+    )
 }
 
 fun SearchCities.toSearchCitiesUI(): SearchCitiesStateUi {

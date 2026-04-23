@@ -2,7 +2,11 @@ package com.jesil.skycast.data.mapper
 
 import com.jesil.skycast.data.model.CurrentWeather
 import com.jesil.skycast.data.source.local.model.CityWeatherEntity
+import com.jesil.skycast.data.source.local.model.DailyWeatherEntity
+import com.jesil.skycast.data.source.local.model.HourlyWeatherEntity
 import com.jesil.skycast.features.cities.models.CityModel
+import com.jesil.skycast.features.weather.models.DailyWeatherStateUi
+import com.jesil.skycast.features.weather.models.HoursWeatherStateUi
 import com.jesil.skycast.features.weather.models.WeatherStateUi
 import com.jesil.skycast.ui.util.Constants.HUMIDITY
 import com.jesil.skycast.ui.util.Constants.PRESSURE
@@ -33,11 +37,29 @@ fun CurrentWeather.toWeatherEntity(): CityWeatherEntity{
         minTemperature = minTemperature,
         visibility = visibility,
         seaLevel = seaLevel,
-        timeZone = 3600,
-//        hourlyWeather = emptyList(),
-//        dailyWeather = emptyList()
+        timeZone = timeZone.epochSecond.toInt(),
+        hourlyWeather = hourlyWeather.map { it.toHourlyEntity() },
+        dailyWeather = dailyWeather.map { it.toDailyEntity() }
     )
 }
+private fun CurrentWeather.toHourlyEntity(): HourlyWeatherEntity {
+    return HourlyWeatherEntity(
+        time = timeZone.epochSecond.toInt(),
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature,
+        minTemperature = minTemperature
+    )
+}
+
+private fun CurrentWeather.toDailyEntity(): DailyWeatherEntity {
+    return DailyWeatherEntity(
+        day = timeZone.epochSecond.toInt(),
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature,
+        minTemperature = minTemperature
+    )
+}
+
 
 fun List<CityWeatherEntity>.toCurrentWeather(): List<CurrentWeather> {
     return this.map { it.toCurrentWeatherSingle() }
@@ -61,10 +83,29 @@ fun CityWeatherEntity.toCurrentWeatherSingle(): CurrentWeather {
         timeZone = Instant.ofEpochSecond(timeZone.toLong()),
         visibility = visibility,
         seaLevel = seaLevel,
-        hourlyWeather = emptyList(),
-        dailyWeather = emptyList()
+        hourlyWeather = hourlyWeather.map { it.toHourlyWeather() },
+        dailyWeather = dailyWeather.map { it.toDailyWeather() }
     )
 }
+
+private fun HourlyWeatherEntity.toHourlyWeather(): CurrentWeather {
+    return CurrentWeather(
+        timeZone = Instant.ofEpochSecond(time.toLong()),
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature,
+        minTemperature = minTemperature,
+    )
+}
+
+private fun DailyWeatherEntity.toDailyWeather(): CurrentWeather {
+    return CurrentWeather(
+        timeZone = Instant.ofEpochSecond(day.toLong()),
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature,
+        minTemperature = minTemperature,
+    )
+}
+
 
 fun WeatherStateUi.fromCurrentWeatherUI(): CurrentWeather {
     return CurrentWeather(
@@ -83,11 +124,30 @@ fun WeatherStateUi.fromCurrentWeatherUI(): CurrentWeather {
         minTemperature = minTemperature.trim { c -> c == '°' }.toInt(),
         visibility = visibility.removeSuffix(" km").toInt(),
         seaLevel = pressure.removeSuffix(" hPa").toInt(),
-        timeZone = Instant.now(),
-        hourlyWeather = emptyList(),
-        dailyWeather = emptyList()
+        timeZone = timeZone,
+        hourlyWeather = hourlyWeather.map { it.fromHourlyWeatherUi()},
+        dailyWeather = dailyWeather.map { it.fromDailyWeatherUi() }
     )
 }
+
+private fun HoursWeatherStateUi.fromHourlyWeatherUi(): CurrentWeather {
+    return CurrentWeather(
+        timeZone = time,
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature.trim {it == '°'}.toInt(),
+        minTemperature = minTemperature.trim {it == '°'}.toInt()
+    )
+}
+
+private fun DailyWeatherStateUi.fromDailyWeatherUi(): CurrentWeather{
+    return CurrentWeather(
+        timeZone = day,
+        weatherTypeIcon = weatherTypeIcon,
+        temperature = temperature.trim {it == '°'}.toInt(),
+        minTemperature = minTemperature.trim {it == '°'}.toInt()
+    )
+}
+
 
 fun CurrentWeather.toCityModel(): CityModel {
     return CityModel(
@@ -96,9 +156,10 @@ fun CurrentWeather.toCityModel(): CityModel {
         maxTemperature = temperature.toString() + TEMP_CELSIUS,
         minTemperature = minTemperature.toString()  + TEMP_CELSIUS,
         weatherTypeIcon = weatherTypeIcon,
-        weatherType = weatherType
+        weatherType = weatherType,
+        lat = 0.0,
+        lon = 0.0
     )
-
 }
 
 fun CurrentWeather.toWeatherStateUi(): WeatherStateUi {
@@ -115,11 +176,11 @@ fun CurrentWeather.toWeatherStateUi(): WeatherStateUi {
         seaLevel = seaLevel.toString() + PRESSURE,
         visibility = visibility.toString() + VISIBILITY_SPEED,
         minTemperature = minTemperature.toString() + TEMP_CELSIUS,
-        timeZone = timeZone.formatTimestamp(),
+        timeZone = timeZone,
         sunrise = sunrise,
         sunset = sunset,
-        hourlyWeather = emptyList(),
-        dailyWeather = emptyList()
+        hourlyWeather = hourlyWeather.map { it.toHoursWeatherUI() },
+        dailyWeather = dailyWeather.map { it.toDailyWeatherUI() }
     )
 }
 

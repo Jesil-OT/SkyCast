@@ -119,13 +119,20 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = "${Screens.CitiesWeatherScreen.route}/{id}",
+                        route = "${Screens.CitiesWeatherScreen.route}/{id}/{cities_lat}/{cities_long}",
                         arguments = listOf(
-                            navArgument("id") { type = NavType.IntType }
+                            navArgument("id") { type = NavType.IntType },
+                            navArgument("cities_lat") { type = NavType.StringType },
+                            navArgument("cities_long") { type = NavType.StringType }
                         )
                     ) {
                         val citiesWeatherViewModel: CitiesWeatherViewModel = koinViewModel()
                         val citiesWeatherState by citiesWeatherViewModel.cityWeather.collectAsStateWithLifecycle()
+                        val errorState by citiesWeatherViewModel.errorMessage.collectAsStateWithLifecycle("")
+
+                        LaunchedEffect(citiesWeatherViewModel.errorMessage){
+                            Toast.makeText(context, errorState, Toast.LENGTH_SHORT).show()
+                        }
 
                         CitiesWeatherScreen(
                             state = citiesWeatherState,

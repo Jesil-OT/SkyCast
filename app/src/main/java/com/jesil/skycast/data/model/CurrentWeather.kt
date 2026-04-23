@@ -1,6 +1,7 @@
 package com.jesil.skycast.data.model
 
 import com.jesil.skycast.data.source.local.model.CityWeatherEntity
+import com.jesil.skycast.data.source.local.model.HourlyWeatherEntity
 import java.time.Instant
 
 data class CurrentWeather(
@@ -23,3 +24,4 @@ data class CurrentWeather(
     val hourlyWeather: List<CurrentWeather> = emptyList(),
     val dailyWeather: List<CurrentWeather> = emptyList()
 )
+

@@ -1,5 +1,6 @@
 package com.jesil.skycast.features.weather.models
 
+import com.jesil.skycast.data.model.CurrentWeather
 import java.time.Instant
 
 
@@ -14,7 +15,7 @@ data class WeatherStateUi(
     val windSpeed: String = "",
     val humidity: String = "",
     val rainChance: String = "",
-    val timeZone: String = "",
+    val timeZone: Instant = Instant.now(),
     val sunrise: Instant = Instant.now(),
     val sunset: Instant = Instant.now(),
     val pressure: String = "",
@@ -30,5 +31,4 @@ sealed class WeatherViewState{
     data class Success(val data: WeatherStateUi): WeatherViewState()
     data class Error(val message: String): WeatherViewState()
 }
-
 

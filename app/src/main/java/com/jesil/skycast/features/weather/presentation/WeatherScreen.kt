@@ -60,6 +60,8 @@ import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
 import com.jesil.skycast.features.weather.presentation.components.WeatherInfos
 import com.jesil.skycast.features.weather.presentation.events.WeatherAction
 import com.jesil.skycast.ui.theme.SkyCastTheme
+import com.jesil.skycast.ui.util.formatUnixDay
+import com.jesil.skycast.ui.util.formatUnixTimeSimple
 import com.jesil.skycast.ui.util.generateBackgroundColor
 import com.jesil.skycast.ui.util.generateIcon
 import org.koin.androidx.compose.koinViewModel
@@ -243,7 +245,7 @@ fun WeatherInnerScreen(
                     ) {
                         items(state.hourlyWeather) { hourlyWeather ->
                             HoursWeatherItem(
-                                time = hourlyWeather.time,
+                                time = hourlyWeather.time.formatUnixTimeSimple(),
                                 weatherType = hourlyWeather.weatherTypeIcon,
                                 temperature = hourlyWeather.temperature,
                                 minTemperature = hourlyWeather.minTemperature,
@@ -295,7 +297,7 @@ fun WeatherInnerScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp, vertical = 10.dp),
-                            day = dailyWeather.day,
+                            day = dailyWeather.day.formatUnixDay(),
                             weatherType = dailyWeather.weatherTypeIcon,
                             temperature = dailyWeather.temperature,
                             minTemperature = dailyWeather.minTemperature,
@@ -344,7 +346,7 @@ internal val weatherUiState = WeatherStateUi(
     windSpeed = "11 km/h",
     humidity = "94%",
     rainChance = "0.13",
-    timeZone = "West Africa Time",
+    timeZone = Instant.now(),
     time = "Mon, July 6",
     sunrise = Instant.now(),
     sunset = Instant.now(),
