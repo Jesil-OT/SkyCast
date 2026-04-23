@@ -8,11 +8,13 @@ import com.jesil.skycast.data.mapper.toWeatherStateUi
 import com.jesil.skycast.data.model.CurrentWeather
 import com.jesil.skycast.data.repository.cities.CitiesRepository
 import com.jesil.skycast.features.weather.models.WeatherStateUi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import timber.log.Timber
 
 class CitiesWeatherViewModel(
     private val citiesWeatherRepository: CitiesRepository,
@@ -26,9 +28,15 @@ class CitiesWeatherViewModel(
         initialValue = WeatherStateUi()
     )
 
+    val errorMessage : MutableSharedFlow<String> = MutableSharedFlow()
+
     init {
         val id: Int = (savedStateHandle.get<Int>("id") ?: 0)
+        val lat: Double = (savedStateHandle.get<String>("cities_lat") ?: 0f).toString().toDouble()
+        val long: Double = (savedStateHandle.get<String>("cities_long") ?: 0f).toString().toDouble()
+
         getCityWeather(id)
+        refreshWeather(latitude = lat, longitude = long)
     }
     private fun getCityWeather(id: Int) {
         viewModelScope.launch {
@@ -37,6 +45,22 @@ class CitiesWeatherViewModel(
                     _cityWeather.value = city.toWeatherStateUi()
                 }
             }
+        }
+    }
+
+    private fun refreshWeather(
+        latitude: Double,
+        longitude: Double
+    ){
+        viewModelScope.launch {
+            citiesWeatherRepository.refreshCityWeather(
+                latitude = latitude,
+                longitude = longitude,
+                onErrorMessage = {
+                    errorMessage.emit(it)
+                    Timber.e("Error message is $it")
+                }
+            )
         }
     }
 }

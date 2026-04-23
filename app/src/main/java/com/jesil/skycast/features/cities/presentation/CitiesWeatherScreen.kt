@@ -49,6 +49,8 @@ import com.jesil.skycast.features.weather.presentation.components.LazyListHeader
 import com.jesil.skycast.features.weather.presentation.components.Location
 import com.jesil.skycast.features.weather.presentation.components.LocationTopBar
 import com.jesil.skycast.features.weather.presentation.components.WeatherInfos
+import com.jesil.skycast.ui.util.formatUnixDay
+import com.jesil.skycast.ui.util.formatUnixTimeSimple
 import com.jesil.skycast.ui.util.generateBackgroundColor
 import com.jesil.skycast.ui.util.generateIcon
 
@@ -190,7 +192,7 @@ fun CitiesWeatherScreen(
                     ) {
                         items(state.hourlyWeather) { hourlyWeather ->
                             HoursWeatherItem(
-                                time = hourlyWeather.time,
+                                time = hourlyWeather.time.formatUnixTimeSimple(),
                                 weatherType = hourlyWeather.weatherTypeIcon,
                                 temperature = hourlyWeather.temperature,
                                 minTemperature = hourlyWeather.minTemperature,
@@ -242,7 +244,7 @@ fun CitiesWeatherScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp, vertical = 10.dp),
-                            day = dailyWeather.day,
+                            day = dailyWeather.day.formatUnixDay(),
                             weatherType = dailyWeather.weatherTypeIcon,
                             temperature = dailyWeather.temperature,
                             minTemperature = dailyWeather.minTemperature,

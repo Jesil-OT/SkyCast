@@ -153,15 +153,22 @@ fun CitiesScreen(
                                 verticalArrangement = Arrangement.spacedBy(20.dp),
                                 content = {
                                     items(
-                                        items =  state,
+                                        items = state,
                                         key = { it.id }
-                                    ) {city ->
+                                    ) { city ->
                                         WeatherCityItem(
                                             modifier = Modifier.animateItem(),
                                             item = city,
                                             isSelected = selectedCities.contains(city.id.toString()),
-                                            onClick = { id -> navController.navigate(Screens.CitiesWeatherScreen.route + "/$id") },
-                                            onLongPress = { isPressed-> onActions(CitiesAction.OnLongPress(city.id.toString(), isPressed)) }
+                                            onClick = { id -> navController.navigate(Screens.CitiesWeatherScreen.route + "/$id" + "/${city.lat}" + "/${city.lon}") },
+                                            onLongPress = { isPressed ->
+                                                onActions(
+                                                    CitiesAction.OnLongPress(
+                                                        city.id.toString(),
+                                                        isPressed
+                                                    )
+                                                )
+                                            }
                                         )
                                     }
                                 }
