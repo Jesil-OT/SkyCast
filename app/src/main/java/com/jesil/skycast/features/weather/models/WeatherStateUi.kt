@@ -22,6 +22,8 @@ data class WeatherStateUi(
     val minTemperature: String = "",
     val visibility: String = "",
     val seaLevel: String = "",
+    val latitude: Double? = 0.0,
+    val longitude: Double? = 0.0,
     val hourlyWeather: List<HoursWeatherStateUi> = emptyList(),
     val dailyWeather: List<DailyWeatherStateUi> = emptyList()
 )

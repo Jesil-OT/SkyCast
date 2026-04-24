@@ -28,11 +28,10 @@ class SearchWeatherViewModel(
     private val _searchWeatherState = MutableStateFlow<WeatherViewState>(WeatherViewState.Loading)
     val searchWeatherState = _searchWeatherState.asStateFlow()
 
+    val lat: Double = (savedStateHandle.get<String>("lat") ?: 0f).toString().toDouble()
+    val long: Double = (savedStateHandle.get<String>("long") ?: 0f).toString().toDouble()
+
     init {
-
-        val lat: Double = (savedStateHandle.get<String>("lat") ?: 0f).toString().toDouble()
-        val long: Double = (savedStateHandle.get<String>("long") ?: 0f).toString().toDouble()
-
         getCurrentWeatherFromCity(
             latitude = lat,
             longitude = long
@@ -43,7 +42,10 @@ class SearchWeatherViewModel(
         when(action){
             is SearchWeatherActions.AddedCity -> {
                 viewModelScope.launch {
-                    searchWeatherRepository.addCity(action.cityWeather)
+                    searchWeatherRepository.addCity(action.cityWeather.fromCurrentWeatherUI(
+                        latitude = lat,
+                        longitude = long
+                    ))
                 }
             }
         }

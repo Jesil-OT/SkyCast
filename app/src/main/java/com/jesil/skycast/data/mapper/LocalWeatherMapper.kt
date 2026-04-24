@@ -38,6 +38,8 @@ fun CurrentWeather.toWeatherEntity(): CityWeatherEntity{
         visibility = visibility,
         seaLevel = seaLevel,
         timeZone = timeZone.epochSecond.toInt(),
+        latitude = latitude,
+        longitude = longitude,
         hourlyWeather = hourlyWeather.map { it.toHourlyEntity() },
         dailyWeather = dailyWeather.map { it.toDailyEntity() }
     )
@@ -83,6 +85,8 @@ fun CityWeatherEntity.toCurrentWeatherSingle(): CurrentWeather {
         timeZone = Instant.ofEpochSecond(timeZone.toLong()),
         visibility = visibility,
         seaLevel = seaLevel,
+        latitude = latitude,
+        longitude = longitude,
         hourlyWeather = hourlyWeather.map { it.toHourlyWeather() },
         dailyWeather = dailyWeather.map { it.toDailyWeather() }
     )
@@ -107,7 +111,10 @@ private fun DailyWeatherEntity.toDailyWeather(): CurrentWeather {
 }
 
 
-fun WeatherStateUi.fromCurrentWeatherUI(): CurrentWeather {
+fun WeatherStateUi.fromCurrentWeatherUI(
+    latitude: Double,
+    longitude: Double
+): CurrentWeather {
     return CurrentWeather(
         id = id,
         location = location,
@@ -125,6 +132,8 @@ fun WeatherStateUi.fromCurrentWeatherUI(): CurrentWeather {
         visibility = visibility.removeSuffix(" km").toInt(),
         seaLevel = pressure.removeSuffix(" hPa").toInt(),
         timeZone = timeZone,
+        latitude = latitude,
+        longitude = longitude,
         hourlyWeather = hourlyWeather.map { it.fromHourlyWeatherUi()},
         dailyWeather = dailyWeather.map { it.fromDailyWeatherUi() }
     )
@@ -157,8 +166,8 @@ fun CurrentWeather.toCityModel(): CityModel {
         minTemperature = minTemperature.toString()  + TEMP_CELSIUS,
         weatherTypeIcon = weatherTypeIcon,
         weatherType = weatherType,
-        lat = 0.0,
-        lon = 0.0
+        lat = latitude,
+        lon = longitude
     )
 }
 
@@ -179,16 +188,9 @@ fun CurrentWeather.toWeatherStateUi(): WeatherStateUi {
         timeZone = timeZone,
         sunrise = sunrise,
         sunset = sunset,
+        latitude = latitude,
+        longitude = longitude,
         hourlyWeather = hourlyWeather.map { it.toHoursWeatherUI() },
         dailyWeather = dailyWeather.map { it.toDailyWeatherUI() }
     )
 }
-
-
-//fun HourlyWeather.toHourlyEntity(): CityWeatherEntity {
-//    // map hourly fields into CityWeatherEntity
-//}
-//
-//fun DailyWeather.toDailyEntity(): CityWeatherEntity {
-//    // map daily fields into CityWeatherEntity
-//}

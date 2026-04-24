@@ -61,6 +61,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.jesil.skycast.R
 import com.jesil.skycast.core.navigation.Screens
@@ -89,7 +90,6 @@ fun SearchWeatherScreen(
     onActions: (SearchWeatherActions) -> Unit,
     navController: NavController,
 ) {
-    val scope = rememberCoroutineScope()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -141,7 +141,15 @@ fun SearchWeatherScreen(
                                 navController.popBackStack()
                             },
                             onAddCity = {
-                                onActions(SearchWeatherActions.AddedCity(it.data.fromCurrentWeatherUI()))
+//                                onActions(SearchWeatherActions.AddedCity(it.data.fromCurrentWeatherUI(
+//                                    latitude = latitude,
+//                                    longitude = longitude
+//                                )))
+                                onActions(
+                                    SearchWeatherActions.AddedCity(
+                                        cityWeather = it.data
+                                    )
+                                )
                                 navController.navigate(Screens.CitiesScreen.route) {
                                     popUpTo(Screens.CitiesScreen.route){
                                         inclusive = true

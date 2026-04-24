@@ -20,6 +20,8 @@ data class CurrentWeather(
     val pressure: Int = 0,
     val visibility: Int? = 0,
     val seaLevel : Int = 0,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
     val minTemperature: Int = 0,
     val hourlyWeather: List<CurrentWeather> = emptyList(),
     val dailyWeather: List<CurrentWeather> = emptyList()

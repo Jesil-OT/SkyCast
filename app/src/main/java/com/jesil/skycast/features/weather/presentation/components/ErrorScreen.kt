@@ -37,13 +37,16 @@ fun ErrorScreen(
         verticalArrangement = Arrangement.Center
     ){
         LottieAnimationPreloader(
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.padding(bottom = 10.dp).size(24.dp),
             lottieId = R.raw.error
         )
 
         Text(
             text = message,
-            modifier = Modifier.padding(top = 10.dp),
+            modifier = Modifier.padding(
+                vertical = 10.dp,
+                horizontal = 30.dp
+            ),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface
         )

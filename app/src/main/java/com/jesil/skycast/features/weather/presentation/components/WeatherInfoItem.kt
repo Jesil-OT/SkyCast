@@ -1,5 +1,6 @@
 package com.jesil.skycast.features.weather.presentation.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -98,6 +99,7 @@ fun Location(
         )
 
         Text(
+            modifier = Modifier.animateContentSize(),
             text =location,
             style = MaterialTheme.typography.displayMedium,
             color = Color.White,
