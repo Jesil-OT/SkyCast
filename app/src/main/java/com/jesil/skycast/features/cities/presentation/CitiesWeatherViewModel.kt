@@ -43,6 +43,8 @@ class CitiesWeatherViewModel(
             citiesWeatherRepository.getCityWeather(id).collect { city ->
                 if (city != null) {
                     _cityWeather.value = city.toWeatherStateUi()
+                    Timber.d("getting weather from local DB with current city name: ${city.location}")
+                    Timber.d("getting weather from local DB with latitude: ${city.latitude}, longitude: ${city.longitude}")
                 }
             }
         }
@@ -53,6 +55,7 @@ class CitiesWeatherViewModel(
         longitude: Double
     ){
         viewModelScope.launch {
+            Timber.d("Refreshing weather from network with current city latitude: $latitude, longitude: $longitude")
             citiesWeatherRepository.refreshCityWeather(
                 latitude = latitude,
                 longitude = longitude,

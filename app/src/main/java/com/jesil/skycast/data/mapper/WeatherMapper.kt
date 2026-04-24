@@ -157,7 +157,9 @@ fun WeatherListRemoteDto.toCurrentWeatherEntity(): CityWeatherEntity {
         minTemperature = currentWeatherList[0].main.minimumTemperature.convertToCelsius(),
         visibility = currentWeatherList[0].visibility?.convertMToKM(),
         hourlyWeather = currentWeatherList.map { it.toHourlyWeatherEntity() }.take(9),
-        dailyWeather = currentWeatherList.filterDailyEntries().map { it.toDailyWeatherEntity() }
+        dailyWeather = currentWeatherList.filterDailyEntries().map { it.toDailyWeatherEntity() },
+        latitude = 0.0,
+        longitude = 0.0
     )
 }
 

@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import com.jesil.skycast.data.model.CurrentWeather
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -28,6 +27,8 @@ data class CityWeatherEntity(
     val seaLevel: Int,
     @ColumnInfo(name = "min_temperature") val minTemperature: Int,
     @ColumnInfo(name = "time_zone") val timeZone: Int,
+    val latitude: Double,
+    val longitude: Double,
     @ColumnInfo(name = "hourly_weather") val hourlyWeather: List<HourlyWeatherEntity>,
     @ColumnInfo(name = "daily_weather") val dailyWeather: List<DailyWeatherEntity>
 
