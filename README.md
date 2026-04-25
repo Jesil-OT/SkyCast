@@ -40,7 +40,7 @@ This project serves as a showcase of modern Android development best practices:
 * **Dependency Injection**: [koin](https://insert-koin.io)
 * **Data Source**: [OpenWeather API](https://openweathermap.org/api)
 * **Serialization**: [Kotlinx serialization](https://kotlinlang.org/docs/serialization.html)
-
+* **Animation**: [Lottie animation](https://lottiefiles.com/blog/working-with-lottie-animations/getting-started-with-lottie-animations-in-android-app)
 ---
 
 ## 🛠️ Installation & Setup
